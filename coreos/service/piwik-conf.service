@@ -1,0 +1,21 @@
+[Unit]
+Description=Piwik Configuration Templates
+After=docker.service
+After=flanneld.service
+Requires=docker.service
+Requires=flanneld.service
+
+[Service]
+TimeoutStartSec=0
+Type=oneshot
+RemainAfterExit=true
+ExecStartPre=-/usr/bin/docker rm piwik-conf
+ExecStartPre=-/usr/bin/flock /var/lock /usr/bin/timeout 5m /usr/bin/docker pull extendedmind/piwik-conf:latest
+ExecStart=/usr/bin/docker create --name piwik-conf extendedmind/piwik-conf:latest
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+MachineMetadata=role=node

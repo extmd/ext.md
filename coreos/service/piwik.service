@@ -1,0 +1,25 @@
+[Unit]
+Description=Piwik
+After=docker.service
+After=flanneld.service
+After=mariadb.service
+Requires=docker.service
+Requires=flanneld.service
+Requires=mariadb.service
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker rm piwik
+ExecStartPre=-/usr/bin/flock /var/lock /usr/bin/timeout 5m /usr/bin/docker pull extendedmind/piwik:latest
+ExecStart=/usr/bin/docker run --name piwik \
+--volumes-from piwik-conf \
+--link mariadb:mariadb \
+extendedmind/piwik:latest
+
+[Install]
+WantedBy=multi-user.target
+
+[X-Fleet]
+Global=true
+MachineMetadata=role=node
