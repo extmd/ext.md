@@ -1,0 +1,156 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>md.ext</groupId>
+  <artifactId>root</artifactId>
+  <version>0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>ext.md</name>
+  <description>ext.md Root</description>
+  <url>https://github.com/extendedmindtechnologies/ext.md</url>
+  <inceptionYear>2016</inceptionYear>
+
+  <organization>
+    <name>Extended Mind Technologies Oy</name>
+    <url>https://ext.md</url>
+  </organization>
+
+  <scm>
+    <connection>scm:git:git@github.com:extendedmindtechnologies/ext.md.git</connection>
+    <developerConnection>scm:git:git@github.com:extendedmindtechnologies/ext.md.git</developerConnection>
+    <url>git@github.com:extendedmindtechnologies/ext.md.git</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ttiurani</id>
+      <name>Timo Tiuraniemi</name>
+      <email>timo.tiuraniemi@iki.fi</email>
+    </developer>
+  </developers>
+
+  <properties>
+    <encoding>UTF-8</encoding>
+    <buildNumber>0</buildNumber>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>extendedmind-releases</id>
+      <name>Extended Mind Releases</name>
+      <url>https://ci.ext.md/nexus/content/repositories/releases</url>
+    </repository>
+    <repository>
+      <id>extendedmind-snapshots</id>
+      <name>Extended Mind Snapshots</name>
+      <url>https://ci.ext.md/nexus/content/repositories/snapshots</url>
+    </repository>
+  </repositories>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <!-- Internal dependencies -->
+      <dependency>
+        <groupId>org.extendedmind</groupId>
+        <artifactId>backend</artifactId>
+        <version>${project.version}</version>
+        <classifier>dist</classifier>
+        <type>jar</type>
+      </dependency>
+
+      <dependency>
+        <groupId>org.extendedmind</groupId>
+        <artifactId>backend</artifactId>
+        <version>${project.version}</version>
+        <type>test-jar</type>
+      </dependency>
+
+      <dependency>
+        <groupId>org.extendedmind.frontend</groupId>
+        <artifactId>frontend-app</artifactId>
+        <version>${project.version}</version>
+        <type>war</type>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <modules>
+    <!--module>extendedmind</module>
+    <module>docker</module>
+    <module>e2e</module-->
+    <module>coreos</module>
+  </modules>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.8</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.2.1.jbossorg-3</version>
+        </plugin>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>0.14.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>1.8</version>
+        </plugin>
+        <plugin>
+          <groupId>com.github.eirslett</groupId>
+          <artifactId>frontend-maven-plugin</artifactId>
+          <version>1.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>extendedmind-releases</id>
+      <name>Extended Mind Releases</name>
+      <url>https://ci.ext.md/nexus/content/repositories/releases</url>
+      <layout>default</layout>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>extendedmind-snapshots</id>
+      <name>Extended Mind Snapshots</name>
+      <url>https://ci.ext.md/nexus/content/repositories/snapshots</url>
+      <layout>default</layout>
+    </snapshotRepository>
+  </distributionManagement>
+
+</project>
