@@ -7,10 +7,10 @@
     <artifactId>root</artifactId>
     <version>0-SNAPSHOT</version>
   </parent>
-  <artifactId>docker</artifactId>
+  <artifactId>site</artifactId>
   <packaging>pom</packaging>
-  <name>ext.md :: Docker images</name>
-  <description>ext.md docker images</description>
+  <name>ext.md :: Site</name>
+  <description>ext.md site</description>
   <url>https://github.com/extendedmindtechnologies/ext.md</url>
   <inceptionYear>2016</inceptionYear>
 
@@ -46,6 +46,26 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
+            <id>unpack-extendedmind-site</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.extendedmind.frontend</groupId>
+                  <artifactId>frontend-site</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>sources</classifier>
+                  <type>zip</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/extendedmind-frontend-site</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <execution>
             <id>copy-backup-dependencies</id>
             <phase>generate-resources</phase>
             <goals>
@@ -80,20 +100,79 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>src/main/assembly/dist.xml</descriptor>
-          </descriptors>
-        </configuration>
+        <artifactId>maven-resources-plugin</artifactId>
         <executions>
           <execution>
-            <phase>package</phase>
+            <id>generate-services</id>
+            <phase>process-resources</phase>
             <goals>
-              <goal>single</goal>
+              <goal>copy-resources</goal>
             </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/resources</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/extendedmind-frontend-site/templates</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-new-services</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/service</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/service</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.gmaven</groupId>
+        <artifactId>gmaven-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <properties>
+                <extraNginxConfFile>resources/extra.nginx.extendedmind.conf</extraNginxConfFile>
+              </properties>
+              <source>
+                def file = new File(project.properties.extraNginxConfFile)
+                project.properties.extraNginxConf = file.getText()
+              </source>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/resources</directory>
+              <includes>
+                <include>nginx.extendedmind.conf</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>io.fabric8</groupId>
@@ -174,39 +253,5 @@
         </executions>
       </plugin>
     </plugins>
-    <pluginManagement>
-    	<plugins>
-    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-    		<plugin>
-    			<groupId>org.eclipse.m2e</groupId>
-    			<artifactId>lifecycle-mapping</artifactId>
-    			<version>1.0.0</version>
-    			<configuration>
-    				<lifecycleMappingMetadata>
-    					<pluginExecutions>
-    						<pluginExecution>
-    							<pluginExecutionFilter>
-    								<groupId>
-    									org.apache.maven.plugins
-    								</groupId>
-    								<artifactId>
-    									maven-dependency-plugin
-    								</artifactId>
-    								<versionRange>[2.8,)</versionRange>
-    								<goals>
-    									<goal>copy-dependencies</goal>
-										<goal>unpack</goal>
-    								</goals>
-    							</pluginExecutionFilter>
-    							<action>
-    								<ignore></ignore>
-    							</action>
-    						</pluginExecution>
-    					</pluginExecutions>
-    				</lifecycleMappingMetadata>
-    			</configuration>
-    		</plugin>
-    	</plugins>
-    </pluginManagement>
   </build>
 </project>

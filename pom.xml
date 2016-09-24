@@ -78,9 +78,10 @@
   </dependencyManagement>
 
   <modules>
-    <!--module>extendedmind</module>
-    <module>docker</module>
-    <module>e2e</module-->
+    <!--module>extendedmind</module-->
+    <module>site</module>
+    <!--module>e2e</module-->
+    <!--module>extendedmind-coreos</module-->
     <module>coreos</module>
   </modules>
 
