@@ -99,46 +99,6 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>generate-services</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.basedir}/resources</outputDirectory>
-              <overwrite>true</overwrite>
-              <resources>
-                <resource>
-                  <directory>${project.build.directory}/extendedmind-frontend-site/templates</directory>
-                  <filtering>true</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          <execution>
-            <id>generate-new-services</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/service</outputDirectory>
-              <overwrite>true</overwrite>
-              <resources>
-                <resource>
-                  <directory>${project.basedir}/service</directory>
-                  <filtering>true</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.codehaus.gmaven</groupId>
         <artifactId>gmaven-plugin</artifactId>
         <version>1.4</version>
@@ -162,25 +122,77 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-clean-plugin</artifactId>
-        <configuration>
-          <filesets>
-            <fileset>
-              <directory>${basedir}/resources</directory>
-              <includes>
-                <include>nginx.extendedmind.conf</include>
-              </includes>
-            </fileset>
-          </filesets>
-        </configuration>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-services-from-templates</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/filtered-resources</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/extendedmind-frontend-site/templates</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-services</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/filtered-resources</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/extendedmind-frontend-site/docker</directory>
+                  <includes>
+                    <include>site-config*</include>
+                    <include>nginx.conf</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-new-services</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/filtered-resources</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/resources</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>mariadb*</include>
+                    <include>piwik*</include>
+                    <include>*-assembly.xml</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>docker-maven-plugin</artifactId>
         <configuration>
+          <sourceDirectory>target/filtered-resources</sourceDirectory>
           <images>
             <image>
-              <name>extendedmind/mariadb-conf</name>
+              <name>extmd/mariadb-conf</name>
               <alias>mariadb-conf</alias>
               <build>
                 <from>ubuntu:14.04</from>
@@ -201,7 +213,7 @@
               </build>
             </image>
             <image>
-              <name>extendedmind/mariadb-data</name>
+              <name>extmd/mariadb-data</name>
               <alias>mariadb-data</alias>
               <build>
                 <from>ubuntu:14.04</from>
@@ -220,7 +232,7 @@
               </build>
             </image>
             <image>
-              <name>extendedmind/piwik-conf</name>
+              <name>extmd/piwik-conf</name>
               <alias>piwik-conf</alias>
               <build>
                 <from>ubuntu:14.04</from>
@@ -238,6 +250,51 @@
                   <volume>/etc/confd/templates/piwik</volume>
                   <volume>/etc/piwik</volume>
                 </volumes>
+              </build>
+            </image>
+            <image>
+              <name>extmd/nginx-conf</name>
+              <alias>nginx-conf</alias>
+              <build>
+                <from>ubuntu:14.04</from>
+                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
+                <tags>
+                  <tag>latest</tag>
+                </tags>
+                <assembly>
+                  <mode>dir</mode>
+                  <basedir>/etc</basedir>
+                  <descriptor>nginx-conf-assembly.xml</descriptor>
+                </assembly>
+                <volumes>
+                  <volume>/etc/confd/conf.d/nginx</volume>
+                  <volume>/etc/confd/templates/nginx</volume>
+                  <volume>/etc/nginx/sites-enabled</volume>
+                </volumes>
+              </build>
+            </image>
+            <image>
+              <name>extmd/site</name>
+              <alias>site</alias>
+              <build>
+                <from>extendedmind/node:latest</from>
+                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
+                <tags>
+                  <tag>latest</tag>
+                  <tag>${project.version}</tag>
+                </tags>
+                <ports>
+                  <port>3000</port>
+                </ports>
+                <assembly>
+                  <mode>dir</mode>
+                  <basedir>/usr/src/extendedmind/site</basedir>
+                  <descriptor>site-assembly.xml</descriptor>
+                </assembly>
+                <workdir>/usr/src/extendedmind/site</workdir>
+                <entryPoint>
+                  <exec><arg>/usr/src/extendedmind/site/site-run.pl</arg></exec>
+                </entryPoint>
               </build>
             </image>
           </images>

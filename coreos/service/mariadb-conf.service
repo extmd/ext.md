@@ -10,8 +10,8 @@ TimeoutStartSec=0
 Type=oneshot
 RemainAfterExit=true
 ExecStartPre=-/usr/bin/docker rm mariadb-conf
-ExecStartPre=-/usr/bin/flock /var/lock /usr/bin/timeout 5m /usr/bin/docker pull extendedmind/mariadb-conf:latest
-ExecStart=/usr/bin/docker create --name mariadb-conf extendedmind/mariadb-conf:latest
+ExecStartPre=-/usr/bin/flock /var/lock /usr/bin/timeout 5m /usr/bin/docker pull extmd/mariadb-conf:latest
+ExecStart=/usr/bin/docker create --name mariadb-conf extmd/mariadb-conf:latest
 
 [Install]
 WantedBy=multi-user.target

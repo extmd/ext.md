@@ -4,17 +4,17 @@
   <fileSets>
     <fileSet>
       <directory>${project.build.directory}/filtered-resources</directory>
-      <outputDirectory>conf.d/mariadb</outputDirectory>
+      <outputDirectory>nginx/sites-enabled</outputDirectory>
       <includes>
-        <include>mariadb.cnf.toml</include>
+        <include>nginx.extendedmind.conf</include>
       </includes>
     </fileSet>
     <fileSet>
       <directory>${project.build.directory}/filtered-resources</directory>
-      <outputDirectory>templates/mariadb</outputDirectory>
-      <filtered>true</filtered>
+      <!-- not actually a template but moved with nginx-run.sh to /etc/nginx -->
+      <outputDirectory>confd/templates/nginx</outputDirectory>
       <includes>
-        <include>mariadb.cnf.tmpl</include>
+        <include>nginx.conf</include>
       </includes>
     </fileSet>
   </fileSets>

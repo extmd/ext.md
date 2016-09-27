@@ -1,5 +1,2 @@
 # Ignore Maven builds
 target/
-
-# Ignore generated Docker files
-site/resources/nginx.extendedmind.conf
