@@ -46,6 +46,26 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
+            <id>unpack-extmd-app</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>md.ext</groupId>
+                  <artifactId>app</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>sources</classifier>
+                  <type>zip</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/extmd-app</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+          <execution>
             <id>unpack-extendedmind-site</id>
             <phase>generate-resources</phase>
             <goals>
@@ -271,6 +291,24 @@
                   <volume>/etc/confd/templates/nginx</volume>
                   <volume>/etc/nginx/sites-enabled</volume>
                 </volumes>
+              </build>
+            </image>
+            <image>
+              <name>extmd/site-static</name>
+              <alias>site-static</alias>
+              <build>
+                <from>ubuntu:14.04</from>
+                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
+                <tags>
+                  <tag>latest</tag>
+                  <tag>${project.version}</tag>
+                </tags>
+                <assembly>
+                  <mode>dir</mode>
+                  <basedir>/usr/src/extendedmind</basedir>
+                  <descriptor>site-static-assembly.xml</descriptor>
+                </assembly>
+                <cmd><shell>cp -R /usr/src/extendedmind/* /var/www</shell></cmd>
               </build>
             </image>
             <image>
