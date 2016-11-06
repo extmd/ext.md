@@ -1,2 +1,9 @@
 # Ignore Maven builds
 target/
+
+# Ignore site imported sources
+site/src/lib/*.ts
+site/src/scss/*.scss
+site/src/views/pages/
+site/src/views/partials/
+site/src/*.json

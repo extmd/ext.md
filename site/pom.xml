@@ -86,17 +86,6 @@
             </configuration>
           </execution>
           <execution>
-            <id>copy-backup-dependencies</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/backend-runtime-dependencies</outputDirectory>
-              <includeScope>runtime</includeScope>
-            </configuration>
-          </execution>
-          <execution>
             <id>unpack-test-database</id>
             <phase>generate-resources</phase>
             <goals>
@@ -145,7 +134,29 @@
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
           <execution>
-            <id>generate-services-from-templates</id>
+            <id>copy-site-sources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/extendedmind-frontend-site</directory>
+                  <includes>
+                    <include>src/**</include>
+                  </includes>
+                  <excludes>
+                    <exclude>src/views/base.nunjucks</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-docker-files-from-templates</id>
             <phase>process-resources</phase>
             <goals>
               <goal>copy-resources</goal>
@@ -162,7 +173,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>copy-services</id>
+            <id>copy-docker-files</id>
             <phase>process-resources</phase>
             <goals>
               <goal>copy-resources</goal>
@@ -183,7 +194,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>generate-new-services</id>
+            <id>generate-new-docker-files</id>
             <phase>process-resources</phase>
             <goals>
               <goal>copy-resources</goal>
@@ -347,6 +358,58 @@
              </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/src/etc</directory>
+            </fileset>
+            <fileset>
+              <directory>${basedir}/src/node</directory>
+            </fileset>
+            <fileset>
+              <directory>${basedir}/src/node_modules</directory>
+            </fileset>
+            <fileset>
+              <directory>${basedir}/src/typings</directory>
+            </fileset>
+            <fileset>
+              <directory>${basedir}/src/public</directory>
+            </fileset>
+            <fileset>
+              <directory>${basedir}/src/dist</directory>
+            </fileset>
+            <!-- Include added extendedmind-site files -->
+            <fileset>
+              <directory>${basedir}/src/lib</directory>
+              <excludes>
+                <exclude>extmd/**</exclude>
+              </excludes>
+            </fileset>
+            <fileset>
+              <directory>${basedir}/src/scss</directory>
+              <excludes>
+                <exclude>extmd/**</exclude>
+              </excludes>
+            </fileset>
+            <fileset>
+              <directory>${basedir}/src/views</directory>
+              <excludes>
+                <exclude>extmd/**</exclude>
+                <exclude>base.nunjucks</exclude>
+              </excludes>
+            </fileset>
+            <fileset>
+              <directory>${basedir}/src</directory>
+              <includes>
+                <include>*.json</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
       </plugin>
     </plugins>
   </build>
