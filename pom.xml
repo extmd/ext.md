@@ -79,6 +79,7 @@
 
   <modules>
     <!--module>extendedmind</module-->
+    <module>scripts</module>
     <module>site</module>
     <!--module>e2e</module-->
     <!--module>extendedmind-coreos</module-->
@@ -121,7 +122,7 @@
         <plugin>
           <groupId>io.fabric8</groupId>
           <artifactId>docker-maven-plugin</artifactId>
-          <version>0.14.1</version>
+          <version>0.18.1</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>

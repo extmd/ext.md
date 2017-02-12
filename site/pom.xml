@@ -225,7 +225,7 @@
           <images>
             <image>
               <name>extmd/mariadb-conf</name>
-              <alias>mariadb-conf</alias>
+              <alias>extmd-mariadb-conf</alias>
               <build>
                 <from>ubuntu:14.04</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
@@ -246,7 +246,7 @@
             </image>
             <image>
               <name>extmd/mariadb-data</name>
-              <alias>mariadb-data</alias>
+              <alias>extmd-mariadb-data</alias>
               <build>
                 <from>ubuntu:14.04</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
@@ -265,7 +265,7 @@
             </image>
             <image>
               <name>extmd/piwik-conf</name>
-              <alias>piwik-conf</alias>
+              <alias>extmd-piwik-conf</alias>
               <build>
                 <from>ubuntu:14.04</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
@@ -286,7 +286,7 @@
             </image>
             <image>
               <name>extmd/nginx-conf</name>
-              <alias>nginx-conf</alias>
+              <alias>extmd-nginx-conf</alias>
               <build>
                 <from>ubuntu:14.04</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
@@ -307,7 +307,7 @@
             </image>
             <image>
               <name>extmd/site-static</name>
-              <alias>site-static</alias>
+              <alias>extmd-site-static</alias>
               <build>
                 <from>ubuntu:14.04</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
@@ -325,6 +325,7 @@
             </image>
             <image>
               <name>extmd/site</name>
+              <!-- This alias has to match the alias in the extendedmind project for nginx DNS mappings to work-->
               <alias>site</alias>
               <build>
                 <from>extendedmind/node:latest</from>
