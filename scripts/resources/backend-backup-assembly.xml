@@ -6,8 +6,14 @@
       <directory>${project.build.directory}/extendedmind-scripts/backend-${project.version}</directory>
       <outputDirectory>.</outputDirectory>
       <includes>
-        <include>backend-backup-neo4j.sh</include>
         <include>backend-backup.sh</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}/extendedmind-scripts/backend-${project.version}</directory>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+        <include>backend-backup-neo4j.sh</include>
       </includes>
     </fileSet>
     <fileSet>
