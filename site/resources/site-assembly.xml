@@ -14,7 +14,7 @@
       <directory>${project.build.directory}/filtered-resources</directory>
       <outputDirectory>.</outputDirectory>
       <includes>
-        <include>site-run.pl</include>
+        <include>site-config.json</include>
       </includes>
     </fileSet>
     <fileSet>
