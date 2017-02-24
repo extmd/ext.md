@@ -1,4 +1,4 @@
-/* Copyright 2013-2016 Extended Mind Technologies Oy
+/* Copyright 2013-2017 Extended Mind Technologies Oy
  *
  * All rights reserved.
  */
