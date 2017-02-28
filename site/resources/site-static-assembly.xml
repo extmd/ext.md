@@ -3,12 +3,12 @@
     xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
   <fileSets>
     <fileSet>
-      <directory>${project.build.directory}/extmd-app/static</directory>
+      <directory>${project.build.directory}/extmd-app</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>${project.build.directory}/extendedmind-frontend-site/src/static</directory>
-      <outputDirectory>.</outputDirectory>
+      <directory>${project.basedir}/src/public/static</directory>
+      <outputDirectory>./static</outputDirectory>
     </fileSet>
   </fileSets>
 </assembly>

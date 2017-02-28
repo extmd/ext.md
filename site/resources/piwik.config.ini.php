@@ -1,7 +1,7 @@
 [database]
 host = "mariadb"
 username = "piwik"
-password = "{{getv "/extendedmind/db/piwikpassword"}}"
+password = "${EXTENDEDMIND_DB_PIWIKPASSWORD}"
 dbname = "piwik"
 tables_prefix = "piwik_"
 port = 3306
@@ -11,10 +11,10 @@ schema = Mysql
 
 [General]
 enable_trusted_host_check = 0
-assume_secure_protocol = {{getv "/extendedmind/db/piwiksecure"}}
+assume_secure_protocol = ${EXTENDEDMIND_DB_PIWIKSECURE}
 proxy_client_headers[] = HTTP_X_FORWARDED_FOR
 proxy_host_headers[] = HTTP_X_FORWARDED_HOST
-salt = "{{getv "/extendedmind/db/piwiksalt"}}"
+salt = "${EXTENDEDMIND_DB_PIWIKSALT}"
 
 [Plugins]
 Plugins[] = "CorePluginsAdmin"

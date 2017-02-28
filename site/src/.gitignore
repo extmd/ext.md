@@ -1,1 +1,4 @@
 /*.json
+/dist/
+/public/
+/typings/

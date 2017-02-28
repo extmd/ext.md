@@ -33,6 +33,10 @@
     </developer>
   </developers>
 
+  <properties>
+    <nginxSitePrefix>extmd-</nginxSitePrefix>
+  </properties>
+
   <build>
     <resources>
       <resource>
@@ -81,26 +85,6 @@
                   <type>zip</type>
                   <overWrite>true</overWrite>
                   <outputDirectory>${project.build.directory}/extendedmind-frontend-site</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-          <execution>
-            <id>unpack-test-database</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.piwik</groupId>
-                  <artifactId>test-mariadb-10.1.13</artifactId>
-                  <version>2.16.1</version>
-                  <type>zip</type>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/piwik</outputDirectory>
-                  <includes>mysql/**</includes>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -218,98 +202,66 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>v7.5.0</nodeVersion>
+              <npmVersion>4.2.0</npmVersion>
+              <nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm-install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>compile</phase>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm-prune-to-production</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>prepare-package</phase>
+            <configuration>
+              <arguments>prune --production</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm-back-to-developement</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>pre-integration-test</phase>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <workingDirectory>src</workingDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>docker-maven-plugin</artifactId>
         <configuration>
           <sourceDirectory>target/filtered-resources</sourceDirectory>
           <images>
             <image>
-              <name>extmd/mariadb-conf</name>
-              <alias>extmd-mariadb-conf</alias>
-              <build>
-                <from>ubuntu:14.04</from>
-                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
-                <tags>
-                  <tag>latest</tag>
-                </tags>
-                <assembly>
-                  <mode>dir</mode>
-                  <basedir>/etc/confd</basedir>
-                  <descriptor>mariadb-conf-assembly.xml</descriptor>
-                </assembly>
-                <volumes>
-                  <volume>/etc/confd/conf.d/mariadb</volume>
-                  <volume>/etc/confd/templates/mariadb</volume>
-                  <volume>/etc/mysql/conf.d</volume>
-                </volumes>
-              </build>
-            </image>
-            <image>
-              <name>extmd/mariadb-data</name>
-              <alias>extmd-mariadb-data</alias>
-              <build>
-                <from>ubuntu:14.04</from>
-                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
-                <tags>
-                  <tag>latest</tag>
-                </tags>
-                <assembly>
-                  <mode>dir</mode>
-                  <basedir>/var/lib</basedir>
-                  <descriptor>mariadb-data-assembly.xml</descriptor>
-                </assembly>
-                <volumes>
-                  <volume>/var/lib/mysql</volume>
-                </volumes>
-              </build>
-            </image>
-            <image>
-              <name>extmd/piwik-conf</name>
-              <alias>extmd-piwik-conf</alias>
-              <build>
-                <from>ubuntu:14.04</from>
-                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
-                <tags>
-                  <tag>latest</tag>
-                </tags>
-                <assembly>
-                  <mode>dir</mode>
-                  <basedir>/etc/confd</basedir>
-                  <descriptor>piwik-conf-assembly.xml</descriptor>
-                </assembly>
-                <volumes>
-                  <volume>/etc/confd/conf.d/piwik</volume>
-                  <volume>/etc/confd/templates/piwik</volume>
-                  <volume>/etc/piwik</volume>
-                </volumes>
-              </build>
-            </image>
-            <image>
-              <name>extmd/nginx-conf</name>
-              <alias>extmd-nginx-conf</alias>
-              <build>
-                <from>ubuntu:14.04</from>
-                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
-                <tags>
-                  <tag>latest</tag>
-                </tags>
-                <assembly>
-                  <mode>dir</mode>
-                  <basedir>/etc</basedir>
-                  <descriptor>nginx-conf-assembly.xml</descriptor>
-                </assembly>
-                <volumes>
-                  <volume>/etc/confd/conf.d/nginx</volume>
-                  <volume>/etc/confd/templates/nginx</volume>
-                  <volume>/etc/nginx/sites-enabled</volume>
-                </volumes>
-              </build>
-            </image>
-            <image>
-              <name>extmd/site-static</name>
+              <name>quay.io/extmd/site-static</name>
               <alias>extmd-site-static</alias>
               <build>
-                <from>ubuntu:14.04</from>
+                <from>quay.io/extendedmind/data-volume:dv-3.5-1</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
@@ -317,18 +269,24 @@
                 </tags>
                 <assembly>
                   <mode>dir</mode>
-                  <basedir>/usr/src/extendedmind</basedir>
+                  <basedir>/app/site-static</basedir>
                   <descriptor>site-static-assembly.xml</descriptor>
                 </assembly>
-                <cmd><shell>cp -R /usr/src/extendedmind/* /var/www</shell></cmd>
+                <entryPoint>
+                  <exec>
+                    <arg>/bin/cp</arg>
+                    <arg>-R</arg>
+                    <arg>/app/site-static/.</arg>
+                    <arg>/app/site-data</arg>
+                  </exec>
+                </entryPoint>
               </build>
             </image>
             <image>
-              <name>extmd/site</name>
-              <!-- This alias has to match the alias in the extendedmind project for nginx DNS mappings to work-->
-              <alias>site</alias>
+              <name>quay.io/extmd/site</name>
+              <alias>extmd-site</alias>
               <build>
-                <from>extendedmind/node:latest</from>
+                <from>quay.io/extendedmind/node:node-7.5.0-1</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
@@ -337,14 +295,22 @@
                 <ports>
                   <port>3000</port>
                 </ports>
+                <volumes>
+                  <volume>/app/site-generated</volume>
+                  <volume>/etc/nginx/sites-enabled</volume>
+                  <volume>/etc/piwik/templates</volume>
+                </volumes>
                 <assembly>
                   <mode>dir</mode>
-                  <basedir>/usr/src/extendedmind/site</basedir>
+                  <basedir>/</basedir>
                   <descriptor>site-assembly.xml</descriptor>
                 </assembly>
-                <workdir>/usr/src/extendedmind/site</workdir>
+                <workdir>/app/site</workdir>
                 <entryPoint>
-                  <exec><arg>/usr/src/extendedmind/site/site-run.pl</arg></exec>
+                  <exec>
+                    <arg>pm2-docker</arg>
+                    <arg>site-pm2.json</arg>
+                  </exec>
                 </entryPoint>
               </build>
             </image>
@@ -388,12 +354,14 @@
               <directory>${basedir}/src/lib</directory>
               <excludes>
                 <exclude>extmd/**</exclude>
+                <exclude>.gitignore</exclude>
               </excludes>
             </fileset>
             <fileset>
               <directory>${basedir}/src/scss</directory>
               <excludes>
                 <exclude>extmd/**</exclude>
+                <exclude>.gitignore</exclude>
               </excludes>
             </fileset>
             <fileset>
@@ -401,6 +369,7 @@
               <excludes>
                 <exclude>extmd/**</exclude>
                 <exclude>base.nunjucks</exclude>
+                <exclude>.gitignore</exclude>
               </excludes>
             </fileset>
             <fileset>

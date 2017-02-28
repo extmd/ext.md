@@ -134,7 +134,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/extendedmind-frontend-app/static/${project.version}</outputDirectory>
+              <outputDirectory>${project.build.directory}/extendedmind-frontend-app</outputDirectory>
               <overwrite>true</overwrite>
               <resources>
                 <resource>
