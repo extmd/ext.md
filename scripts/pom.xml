@@ -90,7 +90,7 @@
                   <basedir>/app/backend-backup</basedir>
                   <descriptor>backend-backup-assembly.xml</descriptor>
                 </assembly>
-                <workdir>/app</workdir>
+                <workdir>/app/backend-backup</workdir>
                 <entryPoint>
                   <exec>
                     <arg>/app/backend-backup/backend-backup.sh</arg>
@@ -113,7 +113,7 @@
                   <basedir>/app/backend-restore</basedir>
                   <descriptor>backend-restore-assembly.xml</descriptor>
                 </assembly>
-                <workdir>/app</workdir>
+                <workdir>/app/backend-restore</workdir>
                 <entryPoint>
                   <exec>
                     <arg>/app/backend-restore/backend-restore.sh</arg>
@@ -136,7 +136,7 @@
                   <basedir>/app/sync-folder</basedir>
                   <descriptor>sync-folder-assembly.xml</descriptor>
                 </assembly>
-                <workdir>/app</workdir>
+                <workdir>/app/sync-folder</workdir>
                 <entryPoint>
                   <exec>
                     <arg>/app/sync-folder/sync-folder.sh</arg>
@@ -144,14 +144,14 @@
                 </entryPoint>
               </build>
             </image>
-          </images>
+         </images>
         </configuration>
         <executions>
           <execution>
              <id>build</id>
              <phase>package</phase>
              <goals>
-               <goal>build-nofork</goal>
+               <goal>build</goal>
              </goals>
           </execution>
         </executions>

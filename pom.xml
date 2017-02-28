@@ -78,12 +78,10 @@
   </dependencyManagement>
 
   <modules>
-    <!--module>extendedmind</module-->
     <module>scripts</module>
+    <module>app</module>
     <module>site</module>
-    <!--module>e2e</module-->
-    <!--module>extendedmind-coreos</module-->
-    <module>coreos</module>
+    <module>e2e</module>
   </modules>
 
   <build>

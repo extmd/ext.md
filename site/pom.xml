@@ -103,7 +103,7 @@
             </goals>
             <configuration>
               <properties>
-                <extraNginxConfFile>resources/extra.nginx.extendedmind.conf</extraNginxConfFile>
+                <extraNginxConfFile>${project.basedir}/resources/extra.nginx.extendedmind.conf</extraNginxConfFile>
               </properties>
               <source>
                 def file = new File(project.properties.extraNginxConfFile)
