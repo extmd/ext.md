@@ -25,7 +25,6 @@
     <url>git@github.com:extendedmindtechnologies/ext.md.git</url>
   </scm>
 
-
   <developers>
     <developer>
       <id>ttiurani</id>
@@ -79,26 +78,26 @@
               </artifactItems>
             </configuration>
           </execution>
-          <execution>
-            <id>unpack-test-database</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.piwik</groupId>
-                  <artifactId>test-mariadb-10.1.13</artifactId>
-                  <version>2.16.1</version>
-                  <type>zip</type>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/docker-dirs/mariadb-data</outputDirectory>
-                  <includes>mysql/**</includes>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
+          <!-- <execution> -->
+          <!--   <id>unpack-test-database</id> -->
+          <!--   <phase>generate-resources</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>unpack</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <artifactItems> -->
+          <!--       <artifactItem> -->
+          <!--         <groupId>org.piwik</groupId> -->
+          <!--         <artifactId>test-mariadb-10.1.13</artifactId> -->
+          <!--         <version>2.16.1</version> -->
+          <!--         <type>zip</type> -->
+          <!--         <overWrite>true</overWrite> -->
+          <!--         <outputDirectory>${project.build.directory}/docker-dirs/mariadb-data</outputDirectory> -->
+          <!--         <includes>mysql/**</includes> -->
+          <!--       </artifactItem> -->
+          <!--     </artifactItems> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
         </executions>
       </plugin>
       <plugin>
@@ -107,7 +106,7 @@
           <execution>
             <!-- This is needed sot that Docker doesn't make the dirs root:root -->
             <id>create-target-dirs</id>
-            <phase>process-resources</phase>
+            <phase>generate-resources</phase>
             <goals>
               <goal>run</goal>
             </goals>
@@ -115,10 +114,10 @@
               <target name="create-docker-dirs">
                 <mkdir dir="target/docker-dirs/backend-emails" />
                 <mkdir dir="target/docker-dirs/backend-backup" />
-                <mkdir dir="target/docker-dirs/site-dynamic" />
                 <mkdir dir="target/docker-dirs/site-dynamic/generated" />
                 <mkdir dir="target/docker-dirs/site-dynamic/files" />
                 <mkdir dir="target/docker-dirs/site-data" />
+                <mkdir dir="target/docker-dirs/mariadb-data" />
               </target>
             </configuration>
           </execution>
@@ -143,7 +142,7 @@
           <verbose>true</verbose>
           <images>
             <image>
-              <name>mariadb:10.1</name>
+              <name>quay.io/extendedmind/mariadb:mariadb-10.1.21</name>
               <alias>mariadb</alias>
               <run>
                 <namingStrategy>alias</namingStrategy>
@@ -152,7 +151,7 @@
                 </env>
                 <volumes>
                   <bind>
-                    <volume>${project.build.directory}/docker-dirs/mariadb-data:/var/lib/mysql</volume>
+                    <volume>${project.build.directory}/docker-dirs/mariadb-data:/app/mariadb-data</volume>
                   </bind>
                 </volumes>
                 <ports>
@@ -315,23 +314,6 @@
              </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-clean-plugin</artifactId>
-        <configuration>
-          <filesets>
-            <fileset>
-              <directory>${basedir}/src/etc</directory>
-            </fileset>
-            <fileset>
-              <directory>${basedir}/src/node</directory>
-            </fileset>
-            <fileset>
-              <directory>${basedir}/src/node_modules</directory>
-            </fileset>
-          </filesets>
-        </configuration>
       </plugin>
     </plugins>
   </build>
