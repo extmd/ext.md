@@ -159,7 +159,7 @@
                 </ports>
               </run>
             </image>
-            <!--image>
+            <image>
               <name>quay.io/extendedmind/piwik:piwik-3.0.1-1</name>
               <alias>piwik</alias>
               <run>
@@ -168,9 +168,9 @@
                   <link>mariadb:mariadb</link>
                 </links>
                 <env>
-                  <EXTENDEDMIND_DB_PIWIKPASSWORD>piwikpwd</EXTENDEDMIND_DB_PIWIKPASSWORD-->
+                  <EXTENDEDMIND_DB_PIWIKPASSWORD>piwikpwd</EXTENDEDMIND_DB_PIWIKPASSWORD>
                   <!-- Salt randomly generated when the test localhost:8008 piwik database was created -->
-                  <!--EXTENDEDMIND_DB_PIWIKSALT>1617253e9c4e9719d9cedc7dbfade0a8</EXTENDEDMIND_DB_PIWIKSALT>
+                  <EXTENDEDMIND_DB_PIWIKSALT>1617253e9c4e9719d9cedc7dbfade0a8</EXTENDEDMIND_DB_PIWIKSALT>
                   <EXTENDEDMIND_DB_PIWIKSECURE>0</EXTENDEDMIND_DB_PIWIKSECURE>
                 </env>
               </run>
@@ -247,6 +247,7 @@
                 <volumes>
                   <from>
                     <image>extmd-site</image>
+                    <image>piwik</image>
                   </from>
                   <bind>
                     <volume>${project.build.directory}/docker-dirs/site-data:/app/site-data:ro</volume>
@@ -263,7 +264,7 @@
                 </ports>
               </run>
             </image>
-            <image>
+            <!--image>
               <name>quay.io/extmd/backend-backup</name>
               <alias>extmd-backend-backup</alias>
               <run>
