@@ -160,10 +160,15 @@
               </run>
             </image>
             <image>
-              <name>quay.io/extendedmind/piwik:piwik-3.0.1-1</name>
+              <name>quay.io/extendedmind/piwik:piwik-3.0.2</name>
               <alias>piwik</alias>
               <run>
                 <namingStrategy>alias</namingStrategy>
+                <!--volumes>
+                  <from>
+                    <image>extmd-site</image>
+                  </from>
+                </volumes-->
                 <links>
                   <link>mariadb:mariadb</link>
                 </links>

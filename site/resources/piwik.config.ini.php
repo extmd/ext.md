@@ -4,10 +4,6 @@ username = "piwik"
 password = "${EXTENDEDMIND_DB_PIWIKPASSWORD}"
 dbname = "piwik"
 tables_prefix = "piwik_"
-port = 3306
-adapter = PDO\MYSQL
-type = InnoDB
-schema = Mysql
 
 [General]
 enable_trusted_host_check = 0
@@ -15,6 +11,7 @@ assume_secure_protocol = ${EXTENDEDMIND_DB_PIWIKSECURE}
 proxy_client_headers[] = HTTP_X_FORWARDED_FOR
 proxy_host_headers[] = HTTP_X_FORWARDED_HOST
 salt = "${EXTENDEDMIND_DB_PIWIKSALT}"
+trusted_hosts[] = "${EXTENDEDMIND_HOST}"
 
 [Plugins]
 Plugins[] = "CorePluginsAdmin"
@@ -45,7 +42,7 @@ Plugins[] = "VisitFrequency"
 Plugins[] = "VisitTime"
 Plugins[] = "VisitorInterest"
 Plugins[] = "ExampleAPI"
-Plugins[] = "ExampleRssWidget"
+Plugins[] = "RssWidget"
 Plugins[] = "Feedback"
 Plugins[] = "Monolog"
 Plugins[] = "Login"
@@ -72,7 +69,10 @@ Plugins[] = "Resolution"
 Plugins[] = "DevicePlugins"
 Plugins[] = "Heartbeat"
 Plugins[] = "Intl"
-Plugins[] = "PiwikPro"
+Plugins[] = "Marketplace"
+Plugins[] = "ProfessionalServices"
+Plugins[] = "UserId"
+Plugins[] = "CustomPiwikJs"
 Plugins[] = "CustomDimensions"
 
 [PluginsInstalled]
@@ -110,7 +110,7 @@ PluginsInstalled[] = "VisitFrequency"
 PluginsInstalled[] = "VisitTime"
 PluginsInstalled[] = "VisitorInterest"
 PluginsInstalled[] = "ExampleAPI"
-PluginsInstalled[] = "ExampleRssWidget"
+PluginsInstalled[] = "RssWidget"
 PluginsInstalled[] = "Feedback"
 PluginsInstalled[] = "CoreUpdater"
 PluginsInstalled[] = "CoreConsole"
@@ -131,5 +131,8 @@ PluginsInstalled[] = "BulkTracking"
 PluginsInstalled[] = "Resolution"
 PluginsInstalled[] = "DevicePlugins"
 PluginsInstalled[] = "Heartbeat"
-PluginsInstalled[] = "PiwikPro"
+PluginsInstalled[] = "Marketplace"
+PluginsInstalled[] = "ProfessionalServices"
+PluginsInstalled[] = "UserId"
+PluginsInstalled[] = "CustomPiwikJs"
 PluginsInstalled[] = "CustomDimensions"
