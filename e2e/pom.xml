@@ -78,26 +78,25 @@
               </artifactItems>
             </configuration>
           </execution>
-          <!-- <execution> -->
-          <!--   <id>unpack-test-database</id> -->
-          <!--   <phase>generate-resources</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>unpack</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <artifactItems> -->
-          <!--       <artifactItem> -->
-          <!--         <groupId>org.piwik</groupId> -->
-          <!--         <artifactId>test-mariadb-10.1.13</artifactId> -->
-          <!--         <version>2.16.1</version> -->
-          <!--         <type>zip</type> -->
-          <!--         <overWrite>true</overWrite> -->
-          <!--         <outputDirectory>${project.build.directory}/docker-dirs/mariadb-data</outputDirectory> -->
-          <!--         <includes>mysql/**</includes> -->
-          <!--       </artifactItem> -->
-          <!--     </artifactItems> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
+          <execution>
+            <id>unpack-test-database</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.piwik</groupId>
+                  <artifactId>test-mariadb-10.1.21</artifactId>
+                  <version>3.0.2</version>
+                  <type>zip</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/docker-dirs</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -117,7 +116,6 @@
                 <mkdir dir="target/docker-dirs/site-dynamic/generated" />
                 <mkdir dir="target/docker-dirs/site-dynamic/files" />
                 <mkdir dir="target/docker-dirs/site-data" />
-                <mkdir dir="target/docker-dirs/mariadb-data" />
               </target>
             </configuration>
           </execution>
@@ -146,9 +144,6 @@
               <alias>mariadb</alias>
               <run>
                 <namingStrategy>alias</namingStrategy>
-                <env>
-                  <MYSQL_ROOT_PASSWORD>rootpwd</MYSQL_ROOT_PASSWORD>
-                </env>
                 <volumes>
                   <bind>
                     <volume>${project.build.directory}/docker-dirs/mariadb-data:/app/mariadb-data</volume>
@@ -160,23 +155,25 @@
               </run>
             </image>
             <image>
-              <name>quay.io/extendedmind/piwik:piwik-3.0.2</name>
+              <name>quay.io/extendedmind/piwik:piwik-3.0.2-1</name>
               <alias>piwik</alias>
               <run>
                 <namingStrategy>alias</namingStrategy>
-                <!--volumes>
+                <volumes>
                   <from>
                     <image>extmd-site</image>
                   </from>
-                </volumes-->
+                </volumes>
                 <links>
                   <link>mariadb:mariadb</link>
                 </links>
                 <env>
-                  <EXTENDEDMIND_DB_PIWIKPASSWORD>piwikpwd</EXTENDEDMIND_DB_PIWIKPASSWORD>
+                  <EXTENDEDMIND_DB_PIWIKUSERNAME>root</EXTENDEDMIND_DB_PIWIKUSERNAME>
+                  <EXTENDEDMIND_DB_PIWIKPASSWORD>rootpwd</EXTENDEDMIND_DB_PIWIKPASSWORD>
                   <!-- Salt randomly generated when the test localhost:8008 piwik database was created -->
-                  <EXTENDEDMIND_DB_PIWIKSALT>1617253e9c4e9719d9cedc7dbfade0a8</EXTENDEDMIND_DB_PIWIKSALT>
+                  <EXTENDEDMIND_DB_PIWIKSALT>47c900f7810fdd64a21e881b8ee3f014</EXTENDEDMIND_DB_PIWIKSALT>
                   <EXTENDEDMIND_DB_PIWIKSECURE>0</EXTENDEDMIND_DB_PIWIKSECURE>
+                  <EXTENDEDMIND_HOST>localhost:8008</EXTENDEDMIND_HOST>
                 </env>
               </run>
             </image>
@@ -269,7 +266,7 @@
                 </ports>
               </run>
             </image>
-            <!--image>
+            <image>
               <name>quay.io/extmd/backend-backup</name>
               <alias>extmd-backend-backup</alias>
               <run>
@@ -297,11 +294,11 @@
                     <volume>${project.build.directory}/docker-dirs/site-data:/app/site-data:ro</volume>
                     <volume>${project.build.directory}/docker-dirs/site-dynamic:/app/site-dynamic</volume>
                   </bind>
-                </volumes-->
+                </volumes>
                 <!-- To test, rsync all static files to /files/test -->
-                <!--cmd>/app/site-data/static /app/site-dynamic/files/test</cmd>
+                <cmd>/app/site-data/static /app/site-dynamic/files/test</cmd>
               </run>
-            </image-->
+            </image>
           </images>
         </configuration>
         <executions>

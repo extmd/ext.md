@@ -146,14 +146,14 @@
       <uniqueVersion>false</uniqueVersion>
       <id>extendedmind-releases</id>
       <name>Extended Mind Releases</name>
-      <url>https://nexus.extendedmind.org/repository/releases</url>
+      <url>https://nexus.extendedmind.org/repository/releases/</url>
       <layout>default</layout>
     </repository>
     <snapshotRepository>
       <uniqueVersion>true</uniqueVersion>
       <id>extendedmind-snapshots</id>
       <name>Extended Mind Snapshots</name>
-      <url>https://nexus.extendedmind.org/repository/snapshots</url>
+      <url>https://nexus.extendedmind.org/repository/snapshots/</url>
       <layout>default</layout>
     </snapshotRepository>
   </distributionManagement>

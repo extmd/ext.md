@@ -1,6 +1,6 @@
 [database]
 host = "mariadb"
-username = "piwik"
+username = "${EXTENDEDMIND_DB_PIWIKUSERNAME}"
 password = "${EXTENDEDMIND_DB_PIWIKPASSWORD}"
 dbname = "piwik"
 tables_prefix = "piwik_"
