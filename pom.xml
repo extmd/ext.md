@@ -40,11 +40,15 @@
       <id>extendedmind-releases</id>
       <name>Extended Mind Releases</name>
       <url>https://nexus.extendedmind.org/repository/releases</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>false</enabled></snapshots>
     </repository>
     <repository>
       <id>extendedmind-snapshots</id>
       <name>Extended Mind Snapshots</name>
       <url>https://nexus.extendedmind.org/repository/snapshots</url>
+      <releases><enabled>false</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
     </repository>
   </repositories>
 
