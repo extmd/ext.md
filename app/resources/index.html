@@ -32,13 +32,13 @@
   <script>
     var packaging = "web";
     var version = "${project.version}";
-    var collectAnalytics = ${extendedmind.analytics};
+    var collectAnalytics = true;
   </script>
 </head>
 <body>
   <div class="web" root-view></div>
   <script src="/static/${project.version}/em.min.js"></script>
-  <script src="/static/${project.version}/HookService.js"></script>
+  <script src="/static/${project.version}/js/HookService.js"></script>
   <style>
   .icon-logo-text:before{
     font-family: 'icomoon' !important;

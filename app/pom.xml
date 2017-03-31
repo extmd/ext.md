@@ -101,6 +101,7 @@
                     <include>audio/**</include>
                     <include>css/**</include>
                     <include>favicon/**</include>
+                    <include>fonts/**</include>
                     <include>img/**</include>
                     <include>js/**</include>
                   </includes>
