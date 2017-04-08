@@ -9,19 +9,22 @@
   <meta name="application-name" content="extended mind">
 
   <meta property="og:title" content="{% block ogtitle %}extended mind{% endblock %}" />
+  <meta property="og:description" content="{% block ogdescription %}extended mind{% endblock %}" />
   <meta property="og:type" content="{% block ogtype %}website{% endblock %}" />
-  <meta property="og:image:url" content="https://ext.md/static/img/logo-text.png" />
-  <meta property="og:image:secure_url" content="https://ext.md/static/img/logo-text.png" />
-  <meta property="og:image:url" content="https://ext.md/static/img/logo.png" />
-  <meta property="og:image:secure_url" content="https://ext.md/static/img/logo.png" />
+  {% if imageUrl %}
+  <meta property="og:image:url" content="{{ imageUrl }}" />
+  {% endif %}
+  {% if secureImageUrl %}
+  <meta property="og:image:secure_url" content="{{ secureImageUrl }}" />
+  {% endif %}
+  <meta property="og:image:url" content="{{ urlOrigin  }}/static/img/logo-text.png" />
+  <meta property="og:image:secure_url" content="{{ urlOrigin }}/static/img/logo-text.png" />
+  <meta property="og:image:url" content="{{ urlOrigin }}/static/img/logo.png" />
+  <meta property="og:image:secure_url" content="{{ urlOrigin }}/static/img/logo.png" />
 
   {% block stylesheets %}
-  {% if development %}
-  <link rel="stylesheet/less" href="/static/less/site.less"/>
-  <script src="/static/js/less.js"></script>
-  {% else %}
-  <link rel="stylesheet" href="/static/css/site.min.css" >
-  {% endif %}
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:bold,regular" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/site.css" >
   {% endblock %}
 
   <link rel="apple-touch-icon" sizes="57x57" href="static/favicon/apple-touch-icon-57x57.png">
@@ -60,16 +63,14 @@
 </head>
 
 <body {% block bodyattrs %}{% endblock %}>
-
-  <header>
-    {% block header %}{% endblock %}
-  </header>
   <div class="main">
     {% block main %}{% endblock %}
   </div>
   <footer>
     {% block footer %}{% endblock %}
   </footer>
-  {% block scripts %}{% endblock %}
+  {% block scripts %}
+  <script src="/static/js/jquery.min.js"></script>
+  {% endblock %}
 </body>
 </html>

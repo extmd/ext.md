@@ -5,6 +5,6 @@
   "headersPath": "our",
   "extraRoutingModule": "./extmd/routing.js",
   "backend": "http://localhost:3004",
-  "urlOrigin": "http://localhost:3000",
+  "urlOrigin": "https://ext.md",
   "syncTimeTreshold": 3000
 }
