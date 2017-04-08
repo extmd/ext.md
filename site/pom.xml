@@ -134,6 +134,7 @@
                   </includes>
                   <excludes>
                     <exclude>src/views/base.nunjucks</exclude>
+                    <exclude>src/config-devel.json</exclude>
                   </excludes>
                 </resource>
               </resources>
@@ -375,6 +376,9 @@
               <includes>
                 <include>*.json</include>
               </includes>
+              <excludes>
+                <exclude>config-devel.json</exclude>
+              </excludes>
             </fileset>
           </filesets>
         </configuration>
