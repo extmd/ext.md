@@ -141,6 +141,25 @@
             </configuration>
           </execution>
           <execution>
+            <id>copy-app-fonts</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/src/public/static/fonts</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/extmd-app/static/${project.version}/fonts</directory>
+                  <includes>
+                    <include>icomoon*</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
             <id>generate-docker-files-from-templates</id>
             <phase>process-resources</phase>
             <goals>
