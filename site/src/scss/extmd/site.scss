@@ -21,6 +21,7 @@ section.main {
 
 button, .button {
   background-color: #0f82fe;
+  transition: background-color 0.2s ease-in, width 0.2s linear;
 }
 
 a.button {
