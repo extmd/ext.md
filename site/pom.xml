@@ -71,7 +71,7 @@
           </execution>
           <execution>
             <id>unpack-extendedmind-site</id>
-            <phase>generate-resources</phase>
+            <phase>generate-sources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
@@ -119,7 +119,7 @@
         <executions>
           <execution>
             <id>copy-site-sources</id>
-            <phase>process-resources</phase>
+            <phase>process-sources</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
@@ -141,20 +141,37 @@
             </configuration>
           </execution>
           <execution>
+            <id>copy-site-config</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/src</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/resources</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>config-devel.json</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
             <id>copy-app-fonts</id>
             <phase>process-resources</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.basedir}/src/public/static/fonts</outputDirectory>
+              <outputDirectory>${project.basedir}/src/public/static/fonts/${project.version}</outputDirectory>
               <overwrite>true</overwrite>
               <resources>
                 <resource>
                   <directory>${project.build.directory}/extmd-app/static/${project.version}/fonts</directory>
-                  <includes>
-                    <include>icomoon*</include>
-                  </includes>
                 </resource>
               </resources>
             </configuration>
@@ -395,9 +412,6 @@
               <includes>
                 <include>*.json</include>
               </includes>
-              <excludes>
-                <exclude>config-devel.json</exclude>
-              </excludes>
             </fileset>
           </filesets>
         </configuration>

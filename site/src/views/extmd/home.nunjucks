@@ -16,7 +16,7 @@
     <a class="toggle" href="#">
       <i class="icon-menu"></i>
     </a>
-    {% include 'partials/menu.nunjucks' %}
+    {% include 'extmd/menu.nunjucks' %}
   </div>
   <div class="heading-main row">
     <div class="large-offset-3 large-6 medium-offset-2 medium-8 small-offset-1 small-10 columns end">
@@ -27,19 +27,6 @@
 </section>
 {% endblock %}
 {% block footer %}
-<div class="left">
-  <div class="some-container">
-    <a href="https://www.facebook.com/extmd" class="some" target="_blank">
-      <span class="icon-facebook"></span>
-    </a>
-    <a href="https://www.twitter.com/extmd" class="some" target="_blank">
-      <span class="icon-twitter"></span>
-    </a>
-    <a href="mailto:info@ext.md" class="some">
-      <span class="icon-email"></span>
-    </a>
-  </div>
-</div>
 <div class="centered">
   <a href="/signup" class="button" onclick="return false;">sign up</a>
 </div>

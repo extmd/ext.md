@@ -23,8 +23,55 @@
   <meta property="og:image:secure_url" content="{{ urlOrigin }}/static/img/logo.png" />
 
   {% block stylesheets %}
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:bold,regular" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/site.css" >
+  <link rel="stylesheet" href="/static/fonts/{{ version }}/fonts.css"/>
+  <link rel="stylesheet" href="/static/css/{{ version }}/site.css" >
+  <style>
+  @font-face {
+    font-family: 'icomoon';
+    src:  url('/static/fonts/{{ version }}/icomoon.eot?19wtd8');
+    src:  url('/static/fonts/{{ version }}/icomoon.eot?19wtd8#iefix') format('embedded-opentype'),
+      url('/static/fonts/{{ version }}/icomoon.woff2?19wtd8') format('woff2'),
+      url('/static/fonts/{{ version }}/icomoon.ttf?19wtd8') format('truetype'),
+      url('/static//fonts/{{ version }}/icomoon.woff?19wtd8') format('woff'),
+      url('/static/fonts/{{ version }}/icomoon.svg?19wtd8#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .icon-logo-text:before{
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: middle;
+    content: "\e60b";
+  }
+  /* MEDIUM */
+  @media only screen and (min-width: 40.063em){
+    .icon-logo-text:after {
+      margin-left: -33px;
+      font-size: 15px;
+    }
+  }
+  /* LARGE */
+  @media only screen and (min-width: 66.063em){
+    .icon-logo-text:after {
+      margin-left: -43px;
+      font-size: 20px;
+    }
+  }
+  /* EXTRA LARGE */
+  @media only screen and (min-width: 90.063em){
+    .icon-logo-text:after {
+      margin-left: -54px;
+      font-size: 25px;
+    }
+  }
+  </style>
   {% endblock %}
 
   <link rel="apple-touch-icon" sizes="57x57" href="static/favicon/apple-touch-icon-57x57.png">
@@ -70,7 +117,7 @@
     {% block footer %}{% endblock %}
   </footer>
   {% block scripts %}
-  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/{{ version }}/jquery.min.js"></script>
   {% endblock %}
 </body>
 </html>
