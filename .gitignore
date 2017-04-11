@@ -4,3 +4,24 @@ target/
 # Node
 node_modules/
 node/
+
+# Site module
+site/src/config-devel.json
+site/src/package.json
+site/src/tsconfig.json
+site/src/tslint.json
+site/src/typings.json
+site/src/dist/
+site/src/public/
+site/src/typings/
+site/src/views/pages/
+site/src/views/partials/
+site/src/lib/index.ts
+site/src/lib/rendering.ts
+site/src/lib/routing.ts
+site/src/lib/server.ts
+site/src/lib/typings.d.ts
+site/src/lib/visualization.ts
+site/src/scss/_constants.scss
+site/src/scss/icons.scss
+site/src/scss/site.scss
