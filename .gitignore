@@ -5,6 +5,9 @@ target/
 node_modules/
 node/
 
+# Git
+.git/
+
 # Site module
 site/src/config-devel.json
 site/src/package.json
