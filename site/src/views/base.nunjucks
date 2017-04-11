@@ -25,6 +25,7 @@
   {% block stylesheets %}
   <link rel="stylesheet" href="/static/fonts/{{ version }}/fonts.css"/>
   <link rel="stylesheet" href="/static/css/{{ version }}/site.css" >
+  <link rel="stylesheet" href="/static/css/{{ version }}/extmd/site.css" >
   <style>
   @font-face {
     font-family: 'icomoon';
@@ -37,42 +38,8 @@
     font-weight: normal;
     font-style: normal;
   }
-
-  .icon-logo-text:before{
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    vertical-align: middle;
-    content: "\e60b";
-  }
-  /* MEDIUM */
-  @media only screen and (min-width: 40.063em){
-    .icon-logo-text:after {
-      margin-left: -33px;
-      font-size: 15px;
-    }
-  }
-  /* LARGE */
-  @media only screen and (min-width: 66.063em){
-    .icon-logo-text:after {
-      margin-left: -43px;
-      font-size: 20px;
-    }
-  }
-  /* EXTRA LARGE */
-  @media only screen and (min-width: 90.063em){
-    .icon-logo-text:after {
-      margin-left: -54px;
-      font-size: 25px;
-    }
-  }
   </style>
-  {% endblock %}
+{% endblock %}
 
   <link rel="apple-touch-icon" sizes="57x57" href="static/favicon/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="114x114" href="static/favicon/apple-touch-icon-114x114.png">

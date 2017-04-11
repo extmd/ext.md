@@ -1,1 +1,134 @@
 // extmd specific site scss
+
+// GENERAL LAYOUT
+
+html {
+  height: 100%;
+}
+
+body, div.main {
+  height: inherit;
+}
+
+section:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+section.main {
+  height: inherit;
+  padding-bottom: 0;
+}
+
+button, .button {
+  background-color: #0f82fe;
+}
+
+a.button {
+  color: white;
+}
+
+button:hover, button:focus, .button:hover, .button:focus {
+  background-color: #0171ea;
+}
+
+footer {
+  padding: 0;
+}
+
+// HOME
+
+.hero-logo {
+  padding-top: 20vh;
+}
+.icon-logo-text:before{
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  vertical-align: middle;
+  content: "\e60b";
+}
+
+.icon-logo-text:before {
+  font-size: 100px;
+}
+.icon-logo-text:after {
+  content: "beta";
+  margin-left: -33px;
+  font-size: 13px;
+}
+.slogan {
+  font-size: 17px;
+}
+/* MEDIUM */
+@media only screen and (min-width: 40.063em){
+  .icon-logo-text:before {
+    font-size: 120px;
+  }
+  .icon-logo-text:after {
+    margin-left: -33px;
+    font-size: 15px;
+  }
+  .slogan {
+    font-size: 20px;
+  }
+}
+/* LARGE */
+@media only screen and (min-width: 66.063em){
+  .icon-logo-text:before {
+    font-size: 135px;
+  }
+  .icon-logo-text:after {
+    margin-left: -43px;
+    font-size: 20px;
+  }
+  .slogan {
+    font-size: 22px;
+  }
+}
+/* EXTRA LARGE */
+@media only screen and (min-width: 90.063em){
+  .icon-logo-text:before {
+    font-size: 155px;
+  }
+  .icon-logo-text:after {
+    margin-left: -54px;
+    font-size: 25px;
+  }
+  .slogan {
+    font-size: 25px;
+  }
+}
+.hero-cta {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.hero-cta > .button {
+  display: inline-block;
+  width: 100%;
+  max-width: 568px;
+  font-weight: 700;
+  font-size: 25px;
+  height: 44px;
+  line-height: 44px;
+  padding: 0;
+}
+
+@media only screen and (min-width: 569px) and (min-height: 400px){
+  .hero-cta {
+    bottom: 10%;
+  }
+}
+
+@media only screen and (min-width: 1000px) and (min-height: 600px){
+  .hero-cta {
+    bottom: 20%;
+  }
+}
+

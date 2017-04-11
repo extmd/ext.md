@@ -18,19 +18,16 @@
     </a>
     {% include 'extmd/menu.nunjucks' %}
   </div>
-  <div class="heading-main row">
-    <div class="large-offset-3 large-6 medium-offset-2 medium-8 small-offset-1 small-10 columns end">
-      <span class="icon-logo-text"></span></br></br>
-      <span>minimal task and note organizer</span>
-    </div>
-  </div>
+  <div class="hero-logo text-center">
+    <span class="icon-logo-text"></span></br>
+    <span class="slogan">minimal task and note organizer</span>
+   </div>
+   <div class="hero-cta text-center">
+     <a href="/signup" class="button">sign up</a>
+   </div>
 </section>
 {% endblock %}
-{% block footer %}
-<div class="centered">
-  <a href="/signup" class="button" onclick="return false;">sign up</a>
-</div>
-{% endblock %}
+{% block footer %}{% endblock %}
 {% block scripts %}
 {{ super() }}
 {% include 'partials/sharing.nunjucks' %}
