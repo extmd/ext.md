@@ -32,7 +32,16 @@
 
   <properties>
     <encoding>UTF-8</encoding>
+    <!-- 0 is the default build number that is used when not running a build from the root, using buildnumber-maven-plugin below. -->
     <buildNumber>0</buildNumber>
+    <!-- Incrementing build number does not happen by default, only when there is a new version set with mvn versions:set -DnewVersion=X which
+      creates a pom.xml.versionsBackup file which then activates a profile build-number-activation. -->
+    <buildNumberIncrementSkip>true</buildNumberIncrementSkip>
+    <extendedmind.analytics>true</extendedmind.analytics>
+    <extendedmind.app.package>org.extendedmind</extendedmind.app.package>
+    <extendedmind.app.id>extmd</extendedmind.app.id>
+    <extendedmind.app.name>extended mind</extendedmind.app.name>
+    <extendedmind.host>https://ext.md</extendedmind.host>
   </properties>
 
   <repositories>
@@ -161,5 +170,21 @@
       <layout>default</layout>
     </snapshotRepository>
   </distributionManagement>
-
+  <pluginRepositories>
+    <pluginRepository>
+      <id>thirdparty.jboss.org</id>
+      <name>JBoss - Third Party Repository</name>
+      <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
+      <layout>default</layout>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>false</enabled></snapshots>
+    </pluginRepository>
+    <pluginRepository>
+      <id>extendedmind-releases</id>
+      <name>Extended Mind Releases</name>
+      <url>https://nexus.extendedmind.org/repository/releases</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>false</enabled></snapshots>
+    </pluginRepository>
+  </pluginRepositories>
 </project>

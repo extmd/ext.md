@@ -71,7 +71,7 @@
           </execution>
           <execution>
             <id>unpack-extendedmind-site</id>
-            <phase>generate-sources</phase>
+            <phase>generate-resources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
@@ -246,8 +246,8 @@
               <goal>install-node-and-npm</goal>
             </goals>
             <configuration>
-              <nodeVersion>v7.5.0</nodeVersion>
-              <npmVersion>4.2.0</npmVersion>
+              <nodeVersion>v7.9.0</nodeVersion>
+              <npmVersion>4.4.4</npmVersion>
               <nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
             </configuration>
           </execution>
