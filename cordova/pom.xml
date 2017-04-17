@@ -34,49 +34,7 @@
   </developers>
 
   <build>
-    <resources>
-      <resource>
-        <directory>templates</directory>
-        <includes>
-          <include>config.xml</include>
-        </includes>
-        <filtering>true</filtering>
-        <targetPath>${project.basedir}/src</targetPath>
-      </resource>
-      <resource>
-        <directory>templates/ios</directory>
-        <filtering>true</filtering>
-        <excludes>
-          <exclude>index.html</exclude>
-        </excludes>
-        <targetPath>${project.basedir}/src/assets/build/ios</targetPath>
-      </resource>
-      <resource>
-        <directory>templates/ios</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>index.html</include>
-        </includes>
-        <targetPath>${project.basedir}/src/merges/ios</targetPath>
-      </resource>
-      <resource>
-        <directory>templates/android</directory>
-        <filtering>true</filtering>
-        <excludes>
-          <exclude>index.html</exclude>
-        </excludes>
-        <targetPath>${project.basedir}/src/assets/build/android</targetPath>
-      </resource>
-      <resource>
-        <directory>templates/android</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>index.html</include>
-        </includes>
-        <targetPath>${project.basedir}/src/merges/android</targetPath>
-      </resource>
-    </resources>
-    <sourceDirectory>${basedir}/src</sourceDirectory>
+   <sourceDirectory>${basedir}/src</sourceDirectory>
     <plugins>
       <plugin>
         <groupId>com.github.eirslett</groupId>
@@ -137,11 +95,117 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-config-xml</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/src</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/templates</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>config.xml</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-ios-assets</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/src/assets/build/ios</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/templates/ios</directory>
+                  <filtering>true</filtering>
+                  <excludes>
+                    <exclude>index.html</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-ios-index-html</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/src/merges/ios</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/templates/ios</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>index.html</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-android-assets</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/src/assets/build/android</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/templates/android</directory>
+                  <filtering>true</filtering>
+                  <excludes>
+                    <exclude>index.html</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-android-index-html</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/src/merges/android</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/templates/android</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>index.html</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
             <id>unpack-to-www</id>
-            <phase>initialize</phase>
+            <phase>generate-sources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
@@ -163,7 +227,7 @@
           </execution>
           <execution>
             <id>unpack-extendedmind-cordova</id>
-            <phase>initialize</phase>
+            <phase>generate-sources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
