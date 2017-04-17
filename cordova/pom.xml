@@ -265,7 +265,8 @@
           </execution>
           <execution>
             <id>cordova-ios-move-sources-to-temp</id>
-            <phase>process-resources</phase>
+            <!--phase>process-resources</phase-->
+            <phase>initialize</phase>
             <goals>
               <goal>exec</goal>
             </goals>
@@ -306,20 +307,8 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>cp</executable>
-              <commandlineArgs>-R ${basedir}/src/platforms/ios-tmp/* ${basedir}/src/platforms/ios</commandlineArgs>
-              <background>false</background>
-            </configuration>
-          </execution>
-          <execution>
-            <id>cordova-ios-remove-temp</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>rm</executable>
-              <commandlineArgs>-rf ${basedir}/src/platforms/ios-tmp</commandlineArgs>
+              <executable>sh</executable>
+              <commandlineArgs>${project.basedir}/restore-ios-sources.sh</commandlineArgs>
               <background>false</background>
             </configuration>
           </execution>

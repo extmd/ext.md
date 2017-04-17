@@ -51,6 +51,12 @@ cordova/src/platforms/ios/extmd/Bridging-Header.h
 cordova/src/platforms/ios/extmd/Images.xcassets/
 cordova/src/platforms/ios/ios.json
 cordova/src/platforms/ios/frameworks.json
+cordova/src/platforms/ios/extmd.xcworkspace/
+cordova/src/platforms/ios/extmd/CDVLaunchScreen.storyboard
+cordova/src/platforms/ios/extmd/Entitlements-Debug.plist
+cordova/src/platforms/ios/extmd/Entitlements-Release.plist
+cordova/src/platforms/ios/pods-debug.xcconfig
+cordova/src/platforms/ios/pods-release.xcconfig
 cordova/src/platforms/platforms.json
 cordova/src/plugins
 cordova/src/assets/build
