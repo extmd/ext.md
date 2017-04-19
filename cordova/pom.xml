@@ -33,6 +33,10 @@
     </developer>
   </developers>
 
+  <properties>
+    <skipRestoreIos>false</skipRestoreIos>
+  </properties>
+
   <build>
    <sourceDirectory>${basedir}/src</sourceDirectory>
     <plugins>
@@ -307,6 +311,7 @@
               <goal>exec</goal>
             </goals>
             <configuration>
+              <skip>${skipRestoreIos}</skip>
               <executable>sh</executable>
               <commandlineArgs>${project.basedir}/restore-ios-sources.sh</commandlineArgs>
               <background>false</background>
@@ -392,25 +397,6 @@
             </fileset>
           </filesets>
         </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <appendAssemblyId>true</appendAssemblyId>
-          <finalName>${project.artifactId}-${project.version}</finalName>
-          <descriptors>
-            <descriptor>sources-assembly.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
     <extensions>
