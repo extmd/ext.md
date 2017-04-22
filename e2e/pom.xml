@@ -230,7 +230,6 @@
                 <volumes>
                   <bind>
                     <volume>${project.build.directory}/docker-dirs/site-dynamic:/app/site-dynamic</volume>
-                    <volume>${project.build.directory}/docker-dirs/site-data:/app/site/public:ro</volume>
                   </bind>
                 </volumes>
                 <links>

@@ -41,7 +41,7 @@
     <extendedmind.app.package>org.extendedmind</extendedmind.app.package>
     <extendedmind.app.id>extmd</extendedmind.app.id>
     <extendedmind.app.name>extended mind</extendedmind.app.name>
-    <extendedmind.host>https://ext.md</extendedmind.host>
+    <extendedmind.url>https://ext.md</extendedmind.url>
   </properties>
 
   <repositories>
