@@ -114,7 +114,7 @@
                 <mkdir dir="target/docker-dirs/backend-emails" />
                 <mkdir dir="target/docker-dirs/backend-backup" />
                 <mkdir dir="target/docker-dirs/site-dynamic/generated" />
-                <mkdir dir="target/docker-dirs/site-dynamic/files" />
+                <mkdir dir="target/docker-dirs/site-dynamic/files/test" />
                 <mkdir dir="target/docker-dirs/site-data" />
               </target>
             </configuration>
@@ -295,7 +295,7 @@
                   </bind>
                 </volumes>
                 <!-- To test, rsync all static files to /files/test -->
-                <cmd>/app/site-data/static /app/site-dynamic/files/test</cmd>
+                <cmd>/app/site-data/static /app/site-dynamic/files/test gsutil</cmd>
               </run>
             </image>
           </images>
