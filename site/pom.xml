@@ -51,7 +51,7 @@
         <executions>
           <execution>
             <id>unpack-extmd-app</id>
-            <phase>generate-resources</phase>
+            <phase>generate-sources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
@@ -71,7 +71,7 @@
           </execution>
           <execution>
             <id>unpack-extendedmind-site</id>
-            <phase>generate-resources</phase>
+            <phase>generate-sources</phase>
             <goals>
               <goal>unpack</goal>
             </goals>
@@ -205,8 +205,8 @@
               <resources>
                 <resource>
                   <directory>${project.build.directory}/extendedmind-frontend-site/docker</directory>
+                  <filtering>true</filtering>
                   <includes>
-                    <include>site-config.json</include>
                     <include>site-pm2.json</include>
                   </includes>
                 </resource>
@@ -227,6 +227,7 @@
                   <directory>${project.basedir}/resources</directory>
                   <filtering>true</filtering>
                   <includes>
+                    <include>site-config.json</include>
                     <include>piwik*</include>
                     <include>*-assembly.xml</include>
                   </includes>
@@ -312,7 +313,7 @@
                     <arg>/bin/cp</arg>
                     <arg>-R</arg>
                     <arg>/app/site-static/.</arg>
-                    <arg>/app/site-data</arg>
+                    <arg>/app/site-public/assets</arg>
                   </exec>
                 </entryPoint>
               </build>

@@ -1,0 +1,11 @@
+{
+  "version": "${project.version}",
+  "port": 3000,
+  "externalStatic": true,
+  "debug": false,
+  "headersPath": "our",
+  "extraRoutingModule": "./extmd/routing.js",
+  "backend": true,
+  "urlOrigin": "https://ext.md",
+  "syncTimeTreshold": 3000
+}
