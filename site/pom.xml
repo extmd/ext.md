@@ -331,7 +331,7 @@
                 </ports>
                 <volumes>
                   <volume>/app/site-generated</volume>
-                  <volume>/etc/nginx/sites-enabled</volume>
+                  <volume>/etc/nginx/sites-enabled/extmd-site</volume>
                   <volume>/etc/piwik/templates</volume>
                 </volumes>
                 <assembly>

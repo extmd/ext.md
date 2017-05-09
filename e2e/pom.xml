@@ -116,6 +116,8 @@
                 <mkdir dir="target/docker-dirs/site-public/generated" />
                 <mkdir dir="target/docker-dirs/site-public/files/test" />
                 <mkdir dir="target/docker-dirs/site-public/assets" />
+                <mkdir dir="target/docker-dirs/fiak-site-public/tiedostot/test" />
+                <mkdir dir="target/docker-dirs/fiak-site-public/assets" />
               </target>
             </configuration>
           </execution>
@@ -241,26 +243,55 @@
               </run>
             </image>
             <image>
-              <name>quay.io/extendedmind/nginx:nginx-1.13.0</name>
+              <name>quay.io/fiak/site-static</name>
+              <alias>fiak-site-static</alias>
+              <run>
+                <namingStrategy>alias</namingStrategy>
+                <volumes>
+                  <bind>
+                    <volume>${project.build.directory}/docker-dirs/fiak-site-public:/app/fiak-site-public</volume>
+                  </bind>
+                </volumes>
+              </run>
+            </image>
+            <image>
+              <name>quay.io/fiak/site</name>
+              <alias>fiak-site</alias>
+              <run>
+                <namingStrategy>alias</namingStrategy>
+                <env>
+                  <EXTENDEDMIND_API_URL>http://backend:8081</EXTENDEDMIND_API_URL>
+                </env>
+                <links>
+                  <link>backend:backend</link>
+                </links>
+              </run>
+            </image>
+            <image>
+              <name>quay.io/extendedmind/nginx:nginx-1.13.0-1</name>
               <alias>nginx</alias>
               <run>
                 <namingStrategy>alias</namingStrategy>
                 <volumes>
                   <from>
                     <image>extmd-site</image>
+                    <image>fiak-site</image>
                     <image>piwik</image>
                   </from>
                   <bind>
                     <volume>${project.build.directory}/docker-dirs/site-public:/app/site-public:ro</volume>
+                    <volume>${project.build.directory}/docker-dirs/fiak-site-public:/app/fiak-site-public:ro</volume>
                   </bind>
                 </volumes>
                 <links>
                   <link>piwik:piwik</link>
                   <link>backend:backend</link>
                   <link>extmd-site:extmd-site</link>
+                  <link>fiak-site:fiak-site</link>
                 </links>
                 <ports>
                   <port>8008:8008</port>
+                  <port>8009:8009</port>
                 </ports>
               </run>
             </image>
@@ -294,6 +325,20 @@
                 </volumes>
                 <!-- To test, rsync all static files to /files/test -->
                 <cmd>/app/site-public/assets/static /app/site-public/files/test gsutil</cmd>
+              </run>
+            </image>
+            <image>
+              <name>quay.io/extmd/sync-folder</name>
+              <alias>fiak-sync-folder</alias>
+              <run>
+                <namingStrategy>alias</namingStrategy>
+                <volumes>
+                  <bind>
+                    <volume>${project.build.directory}/docker-dirs/fiak-site-public:/app/fiak-site-public</volume>
+                  </bind>
+                </volumes>
+                <!-- To test, rsync all static files to /tiedostot/test -->
+                <cmd>/app/fiak-site-public/assets/static /app/fiak-site-public/tiedostot/test gsutil</cmd>
               </run>
             </image>
           </images>

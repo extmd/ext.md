@@ -34,7 +34,7 @@
     </fileSet>
     <fileSet>
       <directory>${project.build.directory}/filtered-resources</directory>
-      <outputDirectory>etc/nginx/sites-enabled</outputDirectory>
+      <outputDirectory>etc/nginx/sites-enabled/extmd-site</outputDirectory>
       <includes>
         <include>nginx.extendedmind.conf</include>
       </includes>
