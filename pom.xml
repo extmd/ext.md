@@ -34,6 +34,7 @@
     <encoding>UTF-8</encoding>
     <!-- 0 is the default build number that is used when not running a build from the root, using buildnumber-maven-plugin below. -->
     <buildNumber>0</buildNumber>
+    <node.version>v7.10.0</node.version>
     <!-- Incrementing build number does not happen by default, only when there is a new version set with mvn versions:set -DnewVersion=X which
       creates a pom.xml.versionsBackup file which then activates a profile build-number-activation. -->
     <buildNumberIncrementSkip>true</buildNumberIncrementSkip>
@@ -148,7 +149,7 @@
         <plugin>
           <groupId>com.github.eirslett</groupId>
           <artifactId>frontend-maven-plugin</artifactId>
-          <version>1.0</version>
+          <version>1.4</version>
         </plugin>
       </plugins>
     </pluginManagement>

@@ -247,9 +247,7 @@
               <goal>install-node-and-npm</goal>
             </goals>
             <configuration>
-              <nodeVersion>v7.9.0</nodeVersion>
-              <npmVersion>4.4.4</npmVersion>
-              <nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+              <nodeVersion>${node.version}</nodeVersion>
             </configuration>
           </execution>
           <execution>
@@ -322,7 +320,7 @@
               <name>quay.io/extmd/site</name>
               <alias>extmd-site</alias>
               <build>
-                <from>quay.io/extendedmind/node:node-7.5.0-1</from>
+                <from>quay.io/extendedmind/node:node-7.10.0-1</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>

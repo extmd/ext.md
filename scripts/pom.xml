@@ -79,7 +79,7 @@
               <name>quay.io/extmd/backend-backup</name>
               <alias>extmd-backend-backup</alias>
               <build>
-                <from>google/cloud-sdk:latest</from>
+                <from>quay.io/extendedmind/cloudsdk:cloudsdk-154.0.0</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
@@ -102,7 +102,7 @@
               <name>quay.io/extmd/backend-restore</name>
               <alias>extmd-backend-restore</alias>
               <build>
-                <from>google/cloud-sdk:latest</from>
+                <from>quay.io/extendedmind/cloudsdk:cloudsdk-154.0.0</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
@@ -125,7 +125,7 @@
               <name>quay.io/extmd/sync-folder</name>
               <alias>extmd-sync-folder</alias>
               <build>
-                <from>google/cloud-sdk:latest</from>
+                <from>quay.io/extendedmind/cloudsdk:cloudsdk-154.0.0</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
