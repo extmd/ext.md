@@ -296,7 +296,7 @@
               </run>
             </image>
             <image>
-              <name>quay.io/extmd/backend-backup</name>
+              <name>quay.io/extendedmind/backend-backup</name>
               <alias>extmd-backend-backup</alias>
               <run>
                 <namingStrategy>alias</namingStrategy>
@@ -314,7 +314,7 @@
               </run>
             </image>
             <image>
-              <name>quay.io/extmd/sync-folder</name>
+              <name>quay.io/extendedmind/sync-folder</name>
               <alias>extmd-sync-folder</alias>
               <run>
                 <namingStrategy>alias</namingStrategy>
@@ -328,7 +328,7 @@
               </run>
             </image>
             <image>
-              <name>quay.io/extmd/sync-folder</name>
+              <name>quay.io/extendedmind/sync-folder</name>
               <alias>fiak-sync-folder</alias>
               <run>
                 <namingStrategy>alias</namingStrategy>

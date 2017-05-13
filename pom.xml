@@ -92,7 +92,6 @@
   </dependencyManagement>
 
   <modules>
-    <module>scripts</module>
     <module>app</module>
     <module>site</module>
     <module>e2e</module>
