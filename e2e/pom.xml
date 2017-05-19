@@ -113,6 +113,7 @@
               <target name="create-docker-dirs">
                 <mkdir dir="target/docker-dirs/backend-emails" />
                 <mkdir dir="target/docker-dirs/backend-backup" />
+                <mkdir dir="target/docker-dirs/backend-logs" />
                 <mkdir dir="target/docker-dirs/site-public/generated" />
                 <mkdir dir="target/docker-dirs/site-public/files/test" />
                 <mkdir dir="target/docker-dirs/site-public/assets" />
@@ -191,6 +192,7 @@
                   <bind>
                     <volume>${project.build.directory}/docker-dirs/backend-emails:/app/backend-emails</volume>
                     <volume>${project.build.directory}/docker-dirs/backend-data:/app/backend-data</volume>
+                    <volume>${project.build.directory}/docker-dirs/backend-logs:/var/log/extendedmind</volume>
                   </bind>
                 </volumes>
                 <ports>
