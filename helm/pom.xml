@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>md.ext</groupId>
@@ -33,14 +33,30 @@
   </developers>
 
   <build>
-    <sourceDirectory>${project.build.directory}/extendedmind-scripts</sourceDirectory>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+              <files>
+                <file>${env.HOME}/.extendedmind/${extendedmind.helm.properties}.properties</file>
+              </files>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>unpack-static</id>
+            <id>unpack-helm-directories</id>
             <phase>generate-resources</phase>
             <goals>
               <goal>unpack</goal>
@@ -54,7 +70,16 @@
                   <classifier>helm</classifier>
                   <type>zip</type>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/helm</outputDirectory>
+                  <outputDirectory>${project.build.directory}/helm-templates</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.extendedmind.frontend</groupId>
+                  <artifactId>frontend-site</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>helm</classifier>
+                  <type>zip</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/helm-templates</outputDirectory>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -82,8 +107,42 @@
               </resources>
             </configuration>
           </execution>
+          <execution>
+            <id>copy-backend-charts</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/helm</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/helm-templates/backend-${project.version}</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-frontend-charts</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/helm</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/helm-templates/frontend-site-${project.version}</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
-   </plugins>
+    </plugins>
   </build>
 </project>

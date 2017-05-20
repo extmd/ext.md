@@ -34,7 +34,7 @@
   </developers>
 
   <properties>
-    <nginxSitePrefix>extmd-</nginxSitePrefix>
+    <nginxSiteHost>extmd-site</nginxSiteHost>
   </properties>
 
   <build>
