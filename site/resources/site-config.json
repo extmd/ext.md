@@ -5,7 +5,7 @@
   "debug": false,
   "headersPath": "our",
   "extraRoutingModule": "./extmd/routing.js",
-  "backend": "http://backend-external:8081",
+  "backend": "http://backend:8081",
   "urlOrigin": "https://ext.md",
   "syncTimeTreshold": 3000
 }

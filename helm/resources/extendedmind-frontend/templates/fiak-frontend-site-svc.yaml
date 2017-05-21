@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fiak-site
+  labels:
+    project: fiak-site
+    version: "${fiak.version}"
+    group: fi.filosofianakatemia
+spec:
+  ports:
+  - name: site
+    port: 3001
+  selector:
+    role: server
+    project: fiak-site
+    version: "${fiak.version}"
+    group: fi.filosofianakatemia

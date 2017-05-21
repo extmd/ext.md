@@ -30,7 +30,7 @@ persistence:
   storageClass: ${extmd.dbStorageClass}
   accessMode: ReadWriteOnce
   fsGroup: 1234
-  size: 8Gi
+  size: ${extmd.mariaDbSize}
 
 ## Configure MariaDB with a custom my.cnf file
 ## ref: https://mariadb.com/kb/en/mariadb/configuring-mariadb-with-mycnf/#example-of-configuration-file

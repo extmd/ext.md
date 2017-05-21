@@ -1,0 +1,70 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: {{ .Values.nginxReplicas }}
+  template:
+    metadata:
+      labels:
+        app: extendedmind
+        tier: frontend
+        role: proxy
+        project: frontend-site
+        version: "${project.version}"
+        group: org.extendedmind.frontend
+    spec:
+      initContainers:
+      - name: nginx-etc-init
+        image: quay.io/{{ .Values.quayIoOrg }}/etc-init:${project.version}
+        volumeMounts:
+        - name: enableddir
+          mountPath: "/etc/nginx/sites-enabled"
+      containers:
+      - name: piwik
+        image: quay.io/extendedmind/piwik:piwik-3.0.3
+        env:
+          - name: EXTENDEDMIND_DB_PIWIKUSERNAME
+            value: {{ .Values.mysqlUser | quote }}
+          - name: EXTENDEDMIND_DB_PIWIKPASSWORD
+            value: {{ .Values.mysqlPassword | quote }}
+          - name: EXTENDEDMIND_DB_PIWIKSALT
+            value: {{ .Values.piwikSalt | quote }}
+          - name: EXTENDEDMIND_DB_PIWIKSECURE
+            value: {{ .Values.piwikSecure | quote }}
+          - name: EXTENDEDMIND_HOST
+            value: {{ .Values.urlOrigin | quote }}
+        ports:
+        - name: piwik
+          containerPort: 9000
+        volumeMounts:
+        - name: piwikdir
+          mountPath: "/var/www/html"
+      - name: nginx
+        image: quay.io/extendedmind/nginx:nginx-1.13.0-1
+        ports:
+        - name: web
+          containerPort: 8008
+        volumeMounts:
+        - name: piwikdir
+          mountPath: "/var/www/html"
+          readOnly: true
+        - name: enableddir
+          mountPath: "/etc/nginx/sites-enabled"
+          readOnly: true
+        - name: publicdir
+          mountPath: /app/site-public
+          readOnly: true
+          subPath: extendedmind
+        - name: publicdir
+          mountPath: /app/fiak-site-public
+          readOnly: true
+          subPath: fiak
+      volumes:
+      - name: enableddir
+        emptyDir: {}
+      - name: piwikdir
+        emptyDir: {}
+      - name: publicdir
+        persistentVolumeClaim:
+          claimName: shared

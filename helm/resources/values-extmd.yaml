@@ -1,0 +1,9 @@
+# Site settings
+siteHostName: "extmd-site"
+
+# Piwik settings
+piwikSalt: ${extmd.piwikSalt}
+piwikSecure: ${extmd.piwikSecure}
+
+# Fiak settings
+fiakFrontendReplicas: ${extmd.fiakFrontendReplicas}

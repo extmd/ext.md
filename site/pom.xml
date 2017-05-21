@@ -89,6 +89,26 @@
               </artifactItems>
             </configuration>
           </execution>
+          <execution>
+            <id>unpack-fiak-site-conf</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>fi.filosofianakatemia</groupId>
+                  <artifactId>site</artifactId>
+                  <version>${fiak.version}</version>
+                  <classifier>config</classifier>
+                  <type>zip</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/fiak-site-config</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -287,7 +307,7 @@
       </plugin>
       <plugin>
         <groupId>io.fabric8</groupId>
-        <artifactId>fabric8-maven-plugin</artifactId>
+        <artifactId>docker-maven-plugin</artifactId>
         <configuration>
           <sourceDirectory>target/filtered-resources</sourceDirectory>
           <images>
@@ -344,6 +364,29 @@
                   <exec>
                     <arg>pm2-docker</arg>
                     <arg>site-pm2.json</arg>
+                  </exec>
+                </entryPoint>
+              </build>
+            </image>
+            <image>
+              <name>quay.io/extmd/etc-init</name>
+              <alias>etc-init</alias>
+              <build>
+                <from>quay.io/extendedmind/tar-curl-rsync:tcr-4</from>
+                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
+                <tags>
+                  <tag>latest</tag>
+                  <tag>${project.version}</tag>
+                </tags>
+                <assembly>
+                  <mode>dir</mode>
+                  <basedir>/</basedir>
+                  <descriptor>etc-init-assembly.xml</descriptor>
+                </assembly>
+                <workdir>/app/etc-init</workdir>
+                <entryPoint>
+                  <exec>
+                    <arg>/app/etc-init/etc-init.sh</arg>
                   </exec>
                 </entryPoint>
               </build>

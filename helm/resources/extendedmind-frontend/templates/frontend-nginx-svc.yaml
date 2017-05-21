@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx
+  labels:
+    project: frontend-site
+    version: "${project.version}"
+    group: org.extendedmind.frontend
+spec:
+  ports:
+  - name: web
+    port: 8008
+  - name: fiakweb
+    port: 8009
+  type: {{ .Values.nginxServiceType }}
+  selector:
+    role: proxy
+    project: frontend-site
+    version: "${project.version}"
+    group: org.extendedmind.frontend

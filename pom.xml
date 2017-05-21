@@ -44,6 +44,7 @@
     <extendedmind.app.name>extended mind</extendedmind.app.name>
     <extendedmind.url>https://ext.md</extendedmind.url>
     <extendedmind.helm.properties>deployment</extendedmind.helm.properties>
+    <fiak.version>2.0</fiak.version>
   </properties>
 
   <repositories>
@@ -95,6 +96,7 @@
   <modules>
     <module>app</module>
     <module>site</module>
+    <module>helm</module>
     <module>e2e</module>
   </modules>
 
@@ -140,11 +142,6 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
           <version>1.2.1.jbossorg-3</version>
-        </plugin>
-        <plugin>
-          <groupId>io.fabric8</groupId>
-          <artifactId>fabric8-maven-plugin</artifactId>
-          <version>3.2.28</version>
         </plugin>
         <plugin>
           <groupId>io.fabric8</groupId>
