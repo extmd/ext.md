@@ -7,3 +7,44 @@ piwikSecure: ${extmd.piwikSecure}
 
 # Fiak settings
 fiakFrontendReplicas: ${extmd.fiakFrontendReplicas}
+
+# Nginx passwords
+nginxSecretName: "nginx-secrets"
+analyticspass: "${extmd.analyticsPass}"
+dashboardpass: "${extmd.dashboardPass}"
+
+# ACME settings
+acmeEmail: "${extmd.acmeEmail}"
+
+# Prometheus settins
+alertmanagerFiles:
+  alertmanager.yml: |-
+    global:
+      slack_api_url: '${extmd.slackUrl}'
+
+    receivers:
+      - name: default-receiver
+        slack_configs:
+        - send_resolved: true
+
+    route:
+      group_wait: 10s
+      group_interval: 5m
+      receiver: default-receiver
+      repeat_interval: 3h
+
+# Grafana
+server:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "nginx"
+    hosts:
+    - ${extmd.grafanaUrl}
+    tls:
+    - secretName: grafana-server-tls
+      hosts:
+      - ${extmd.grafanaUrl}
+  persistentVolume:
+    storageClass: standard

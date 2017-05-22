@@ -1,0 +1,9 @@
+name: "acme"
+home: "https://github.com/extendedmind/extendedmind"
+sources:
+- "git@github.com:extendedmind/extendedmind.git"
+version: "1.0"
+description: "ACME SNI Setup"
+maintainers:
+- name: "Timo Tiuraniemi"
+  email: "timo.tiuraniemi@iki.fi"
