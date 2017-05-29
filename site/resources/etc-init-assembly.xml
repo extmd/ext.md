@@ -11,9 +11,23 @@
     </fileSet>
     <fileSet>
       <directory>${project.build.directory}/filtered-resources</directory>
+      <outputDirectory>/app/etc-init/etc/nginx/sites-enabled/dashboard</outputDirectory>
+      <includes>
+        <include>nginx.dashboard.conf</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}/filtered-resources</directory>
       <outputDirectory>/app/etc-init/etc/nginx/sites-enabled/site</outputDirectory>
       <includes>
         <include>nginx.extendedmind.conf</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}/filtered-resources</directory>
+      <outputDirectory>/app/etc-init/etc/piwik/templates</outputDirectory>
+      <includes>
+        <include>piwik.config.ini.php</include>
       </includes>
     </fileSet>
     <fileSet>

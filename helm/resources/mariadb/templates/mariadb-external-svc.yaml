@@ -6,10 +6,10 @@ metadata:
     app: extendedmind
     tier: backend
     project: backend
-    version: "${project.version}"
     group: org.extendedmind
   name: mariadb
 spec:
+  type: NodePort
   ports:
   - port: 3306
     protocol: TCP

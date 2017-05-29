@@ -1,7 +1,7 @@
 name: "gke"
-home: "https://github.com/extendedmind/extendedmind"
+home: "https://github.com/extendedmindtechnologies/ext.md"
 sources:
-- "git@github.com:extendedmind/extendedmind.git"
+- "git@github.com:extendedmindtechnologies/ext.md.git"
 version: "1.0"
 description: "GKE setup"
 maintainers:

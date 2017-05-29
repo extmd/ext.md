@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: fiak-site-static-{{ .Release.Name }}
+  name: fiak-site-static-{{ .Values.fiakVersion }}-{{ .Values.extmdBuildNumber }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-weight": "-5"
@@ -10,7 +10,6 @@ spec:
     metadata:
       labels:
         project: fiak-site
-        version: "${fiak.version}"
         group: fi.filosofianakatemia
     spec:
       restartPolicy: Never
@@ -26,7 +25,7 @@ spec:
           mountPath: /app/fiak-site-public
       containers:
       - name: site-static
-        image: quay.io/fiak/site-static:${fiak.version}
+        image: quay.io/fiak/site-static:{{ .Values.fiakVersion }}
         volumeMounts:
         - name: publicdir
           mountPath: /app/fiak-site-public

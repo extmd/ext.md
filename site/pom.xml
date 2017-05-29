@@ -249,6 +249,7 @@
                   <includes>
                     <include>site-config.json</include>
                     <include>piwik*</include>
+                    <include>nginx.dashboard.conf</include>
                     <include>*-assembly.xml</include>
                   </includes>
                 </resource>
@@ -311,6 +312,31 @@
         <configuration>
           <sourceDirectory>target/filtered-resources</sourceDirectory>
           <images>
+            <image>
+              <name>quay.io/extmd/app</name>
+              <alias>extmd-app</alias>
+              <build>
+                <from>quay.io/extendedmind/data-volume:dv-3.5-1</from>
+                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
+                <tags>
+                  <tag>latest</tag>
+                  <tag>${project.version}</tag>
+                </tags>
+                <assembly>
+                  <mode>dir</mode>
+                  <basedir>/app/app</basedir>
+                  <descriptor>app-assembly.xml</descriptor>
+                </assembly>
+                <entryPoint>
+                  <exec>
+                    <arg>/bin/cp</arg>
+                    <arg>-R</arg>
+                    <arg>/app/app/.</arg>
+                    <arg>/app/site-public/assets</arg>
+                  </exec>
+                </entryPoint>
+              </build>
+            </image>
             <image>
               <name>quay.io/extmd/site-static</name>
               <alias>extmd-site-static</alias>

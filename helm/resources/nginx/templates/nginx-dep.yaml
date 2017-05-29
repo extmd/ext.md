@@ -11,23 +11,27 @@ spec:
         tier: frontend
         role: proxy
         project: frontend-site
-        version: "${project.version}"
         group: org.extendedmind.frontend
     spec:
       initContainers:
       - name: nginx-etc-init
-        image: quay.io/{{ .Values.quayIoOrg }}/etc-init:${project.version}
+        image: quay.io/{{ .Values.quayIoOrg }}/etc-init:{{ .Values.etcInitVersion }}
         volumeMounts:
         - name: enableddir
           mountPath: "/etc/nginx/sites-enabled"
+        - name: piwiktemplatesdir
+          mountPath: "/etc/piwik/templates"
       containers:
       - name: piwik
         image: quay.io/extendedmind/piwik:piwik-3.0.3
         env:
           - name: EXTENDEDMIND_DB_PIWIKUSERNAME
-            value: {{ .Values.mysqlUser | quote }}
+            value: {{ .Values.piwikUsername | quote }}
           - name: EXTENDEDMIND_DB_PIWIKPASSWORD
-            value: {{ .Values.mysqlPassword | quote }}
+            valueFrom:
+              secretKeyRef:
+                name: "nginx-secrets"
+                key: piwikPassword
           - name: EXTENDEDMIND_DB_PIWIKSALT
             value: {{ .Values.piwikSalt | quote }}
           - name: EXTENDEDMIND_DB_PIWIKSECURE
@@ -38,6 +42,8 @@ spec:
         - name: piwik
           containerPort: 9000
         volumeMounts:
+        - name: piwiktemplatesdir
+          mountPath: "/etc/piwik/templates"
         - name: piwikdir
           mountPath: "/var/www/html"
       - name: nginx
@@ -60,21 +66,19 @@ spec:
           mountPath: /app/fiak-site-public
           readOnly: true
           subPath: fiak
-{{ if .Values.nginxSecretName }}
         - name: secretdir
           mountPath: /etc/nginx/secret
           readOnly: true
-{{ end }}
       volumes:
       - name: enableddir
+        emptyDir: {}
+      - name: piwiktemplatesdir
         emptyDir: {}
       - name: piwikdir
         emptyDir: {}
       - name: publicdir
         persistentVolumeClaim:
           claimName: shared
-{{ if .Values.nginxSecretName }}
       - name: secretdir
         secret:
-          secretName: {{ .Values.nginxSecretName | quote }}
-{{ end }}
+          secretName: "nginx-secrets"

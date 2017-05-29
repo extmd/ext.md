@@ -4,6 +4,7 @@ metadata:
   name: fiak-site
 spec:
   replicas: {{ .Values.fiakFrontendReplicas }}
+  revisionHistoryLimit: 10
   template:
     metadata:
       labels:
@@ -11,12 +12,11 @@ spec:
         tier: frontend
         role: server
         project: fiak-site
-        version: "${fiak.version}"
         group: fi.filosofianakatemia
     spec:
       containers:
       - name: site
-        image: quay.io/fiak/site:${fiak.version}
+        image: quay.io/fiak/site:{{ .Values.fiakVersion }}
         ports:
         - name: koa
           containerPort: 3001

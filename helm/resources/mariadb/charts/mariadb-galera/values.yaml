@@ -2,7 +2,7 @@
 ## ref: https://hub.docker.com/r/adfinissygroup/k8s-mariadb-galera-centos/tags/
 ##
 ## Default: none
-image: quay.io/extendedmind/galera:galera-10.1.23-1
+image: adfinissygroup/k8s-mariadb-galera-centos:v002
 
 ## Specify an imagePullPolicy (Required)
 ## It's recommended to change this to 'Always' if the image tag is 'latest'
@@ -10,14 +10,14 @@ image: quay.io/extendedmind/galera:galera-10.1.23-1
 imagePullPolicy: IfNotPresent
 
 ## Specify password for root user
-mysqlRootPassword: ${extmd.mariaDbRootPassword}
+# mysqlRootPassword:
 
 ## Create a database user
-mysqlUser: piwik
-mysqlPassword: ${extmd.mariaDbPiwikPassword}
+# mysqlUser:
+# mysqlPassword:
 
 ## Create a database
-mysqlDatabase: piwik
+# mysqlDatabase:
 
 ## Number of pods in the StatefulSet
 replicas: 3
@@ -27,10 +27,12 @@ replicas: 3
 ##
 persistence:
   enabled: true
-  storageClass: ${extmd.dbStorageClass}
+  ## If defined, volume.beta.kubernetes.io/storage-class: <storageClass>
+  ## Default: volume.alpha.kubernetes.io/storage-class: default
+  ##
+  # storageClass:
   accessMode: ReadWriteOnce
-  fsGroup: 1234
-  size: ${extmd.mariaDbSize}
+  size: 8Gi
 
 ## Configure MariaDB with a custom my.cnf file
 ## ref: https://mariadb.com/kb/en/mariadb/configuring-mariadb-with-mycnf/#example-of-configuration-file
@@ -44,5 +46,5 @@ persistence:
 ##
 resources:
   requests:
-    memory: ${extmd.mariaDbMemory}
-    cpu: ${extmd.mariaDbCpu}
+    memory: 256Mi
+    cpu: 250m

@@ -4,10 +4,11 @@ metadata:
   name: nginx
   labels:
     project: frontend-site
-    version: "${project.version}"
     group: org.extendedmind.frontend
 spec:
   ports:
+  - name: dashboard
+    port: 8007
   - name: web
     port: 8008
   - name: fiakweb
@@ -16,5 +17,4 @@ spec:
   selector:
     role: proxy
     project: frontend-site
-    version: "${project.version}"
     group: org.extendedmind.frontend

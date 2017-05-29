@@ -44,8 +44,22 @@
     <extendedmind.app.name>extended mind</extendedmind.app.name>
     <extendedmind.url>https://ext.md</extendedmind.url>
     <extendedmind.helm.properties>deployment</extendedmind.helm.properties>
-    <fiak.version>2.0</fiak.version>
+    <fiak.version>2.1.4</fiak.version>
   </properties>
+
+  <profiles>
+    <profile>
+      <id>build-number-activation</id>
+      <activation>
+        <file>
+          <exists>${basedir}/pom.xml.versionsBackup</exists>
+        </file>
+      </activation>
+      <properties>
+        <buildNumberIncrementSkip>false</buildNumberIncrementSkip>
+      </properties>
+    </profile>
+  </profiles>
 
   <repositories>
     <repository>
@@ -97,10 +111,41 @@
     <module>app</module>
     <module>site</module>
     <module>helm</module>
-    <module>e2e</module>
   </modules>
 
   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>2.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.4</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <skip>${buildNumberIncrementSkip}</skip>
+          <doCheck>false</doCheck>
+          <doUpdate>false</doUpdate>
+          <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+          <format>{0,number,#}</format>
+          <items>
+            <item>buildNumber</item>
+          </items>
+          <buildNumberPropertiesFileLocation>${root.project.basedir}/buildNumber.properties</buildNumberPropertiesFileLocation>
+        </configuration>
+      </plugin>
+    </plugins>
     <pluginManagement>
       <plugins>
         <plugin>

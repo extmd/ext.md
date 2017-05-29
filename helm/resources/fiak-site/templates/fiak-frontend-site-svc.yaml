@@ -4,7 +4,6 @@ metadata:
   name: fiak-site
   labels:
     project: fiak-site
-    version: "${fiak.version}"
     group: fi.filosofianakatemia
 spec:
   ports:
@@ -13,5 +12,4 @@ spec:
   selector:
     role: server
     project: fiak-site
-    version: "${fiak.version}"
     group: fi.filosofianakatemia
