@@ -38,7 +38,7 @@
     <!-- extendedmind containers -->
     <extendedmind.backendDiscoveryVersion>1.9.15</extendedmind.backendDiscoveryVersion>
     <extendedmind.backendRestoreVersion>1.9.15</extendedmind.backendRestoreVersion>
-    <extendedmind.backendVersion>1.9.15</extendedmind.backendVersion>
+    <extendedmind.backendVersion>1.9.15.1</extendedmind.backendVersion>
     <extendedmind.backendBackupVersion>1.9.15</extendedmind.backendBackupVersion>
     <extendedmind.syncFolderVersion>1.9.15</extendedmind.syncFolderVersion>
     <!-- ext.md containers -->
