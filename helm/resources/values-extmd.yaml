@@ -12,6 +12,7 @@ siteStaticVersion: "${extmd.siteVersion}"
 siteVersion: "${extmd.siteVersion}"
 appVersion: "${extmd.appVersion}"
 etcInitVersion: "${extmd.etcInitVersion}"
+piwikInitVersion: "${extmd.piwikInitVersion}"
 fiakVersion: "${fiak.version}"
 
 # App settings
