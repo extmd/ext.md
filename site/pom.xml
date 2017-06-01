@@ -250,6 +250,7 @@
                     <include>site-config.json</include>
                     <include>piwik*</include>
                     <include>nginx.dashboard.conf</include>
+                    <include>nginx.piwik.conf</include>
                     <include>*-assembly.xml</include>
                   </includes>
                 </resource>
@@ -408,6 +409,29 @@
                   <mode>dir</mode>
                   <basedir>/</basedir>
                   <descriptor>etc-init-assembly.xml</descriptor>
+                </assembly>
+                <workdir>/app/etc-init</workdir>
+                <entryPoint>
+                  <exec>
+                    <arg>/app/etc-init/etc-init.sh</arg>
+                  </exec>
+                </entryPoint>
+              </build>
+            </image>
+            <image>
+              <name>quay.io/extmd/piwik-init</name>
+              <alias>piwik-init</alias>
+              <build>
+                <from>quay.io/extendedmind/tar-curl-rsync:tcr-4</from>
+                <maintainer>timo.tiuraniemi@iki.fi</maintainer>
+                <tags>
+                  <tag>latest</tag>
+                  <tag>${project.version}</tag>
+                </tags>
+                <assembly>
+                  <mode>dir</mode>
+                  <basedir>/</basedir>
+                  <descriptor>piwik-init-assembly.xml</descriptor>
                 </assembly>
                 <workdir>/app/etc-init</workdir>
                 <entryPoint>

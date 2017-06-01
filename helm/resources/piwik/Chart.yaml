@@ -1,0 +1,9 @@
+name: "piwik"
+home: "https://github.com/extendedmindtechnologies/ext.md"
+sources:
+- "git@github.com:extendedmindtechnologies/ext.md.git"
+version: "1.0"
+description: "Piwik admin"
+maintainers:
+- name: "Timo Tiuraniemi"
+  email: "timo.tiuraniemi@iki.fi"

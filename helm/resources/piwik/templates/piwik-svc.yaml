@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx
+  labels:
+    project: helm
+    group: md.ext
+spec:
+  ports:
+  - name: piwik
+    port: 8006
+  type: ClusterIP
+  selector:
+    role: analytics
+    project: helm
+    group: md.ext
