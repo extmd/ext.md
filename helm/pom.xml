@@ -42,10 +42,10 @@
     <extendedmind.backendBackupVersion>1.9.15</extendedmind.backendBackupVersion>
     <extendedmind.syncFolderVersion>1.9.14</extendedmind.syncFolderVersion>
     <!-- ext.md containers -->
-    <extmd.siteStaticVersion>1.9.15</extmd.siteStaticVersion>
-    <extmd.siteVersion>1.9.15</extmd.siteVersion>
-    <extmd.appVersion>1.9.15</extmd.appVersion>
-    <extmd.etcInitVersion>1.9.15-2</extmd.etcInitVersion>
+    <extmd.siteVersion>1.9.16</extmd.siteVersion>
+    <extmd.appVersion>1.9.16</extmd.appVersion>
+    <extmd.etcInitVersion>1.9.16</extmd.etcInitVersion>
+    <extmd.piwikInitVersion>1.9.16-1</extmd.piwikInitVersion>
   </properties>
 
   <build>

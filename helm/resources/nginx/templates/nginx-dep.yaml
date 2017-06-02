@@ -49,8 +49,12 @@ spec:
       - name: nginx
         image: quay.io/extendedmind/nginx:nginx-1.13.0-1
         ports:
-        - name: web
+        - name: dashboard
+          containerPort: 8007
+        - name: site
           containerPort: 8008
+        - name: fiak
+          containerPort: 8009
         volumeMounts:
         - name: piwikdir
           mountPath: "/var/www/html"
