@@ -159,6 +159,137 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>helm-package-extendedmind-environment</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/extendedmind-environment</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-extendedmind-shared</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/extendedmind-shared</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-extendedmind-app</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/extendedmind-app</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-extendedmind-backend</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/extendedmind-backend</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-extendedmind-backend-extras</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/extendedmind-backend-extras</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-extendedmind-site</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/extendedmind-site</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-extendedmind-site-extras</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/extendedmind-site-extras</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-fiak</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/fiak-site</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-nginx</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/nginx</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-piwik</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/piwik</commandlineArgs>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <workingDirectory>${project.build.directory}/helm-packages</workingDirectory>
+          <executable>helm</executable>
+          <background>false</background>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <appendAssemblyId>true</appendAssemblyId>
+          <finalName>${project.artifactId}-${project.version}</finalName>
+          <descriptors>
+            <descriptor>packages-assembly.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>

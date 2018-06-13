@@ -38,10 +38,3 @@ urlOrigin: "${extendedmind.urlOrigin}"
 
 # ACME settings
 acmeEmail: "${extmd.acmeEmail}"
-
-# Grafana
-server:
-  ingress:
-    enabled: false
-  persistentVolume:
-    storageClass: standard

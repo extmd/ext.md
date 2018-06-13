@@ -35,7 +35,8 @@
     <root.project.basedir>${project.basedir}</root.project.basedir>
     <!-- 0 is the default build number that is used when not running a build from the root, using buildnumber-maven-plugin below. -->
     <buildNumber>0</buildNumber>
-    <node.version>v7.10.0</node.version>
+    <node.version>v10.4.0</node.version>
+    <npm.version>6.1.0</npm.version>
     <!-- Incrementing build number does not happen by default, only when there is a new version set with mvn versions:set -DnewVersion=X which
       creates a pom.xml.versionsBackup file which then activates a profile build-number-activation. -->
     <buildNumberIncrementSkip>true</buildNumberIncrementSkip>
@@ -44,8 +45,8 @@
     <extendedmind.app.id>extmd</extendedmind.app.id>
     <extendedmind.app.name>extended mind</extendedmind.app.name>
     <extendedmind.url>https://ext.md</extendedmind.url>
-    <extendedmind.helm.properties>production</extendedmind.helm.properties>
-    <fiak.version>2.2.1</fiak.version>
+    <extendedmind.helm.properties>development</extendedmind.helm.properties>
+    <fiak.version>2.3.7</fiak.version>
   </properties>
 
   <profiles>
@@ -58,6 +59,7 @@
       </activation>
       <properties>
         <buildNumberIncrementSkip>false</buildNumberIncrementSkip>
+        <extendedmind.helm.properties>production</extendedmind.helm.properties>
       </properties>
     </profile>
   </profiles>
@@ -112,6 +114,7 @@
     <module>app</module>
     <module>site</module>
     <module>helm</module>
+    <module>e2e</module>
   </modules>
 
   <build>
@@ -203,6 +206,11 @@
           <groupId>com.github.eirslett</groupId>
           <artifactId>frontend-maven-plugin</artifactId>
           <version>1.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>3.0.0-M1</version>
         </plugin>
       </plugins>
     </pluginManagement>

@@ -7,6 +7,14 @@ All Rights Reserved.
 All information contained herein is, and remains the property of Extended Mind Technologies Oy.
 
 
+## Minikube setup
+
+On OSX:
+
+```
+minikube start --vm-driver hyperkit --memory=8192 --bootstrapper=kubeadm --extra-config=apiserver.authorization-mode=RBAC
+```
+
 ## New Piwik database setup
 
 1. Don't unpack the MariaDB database and don't attach volumes from extmd-site to the piwik container.
@@ -22,5 +30,5 @@ All information contained herein is, and remains the property of Extended Mind T
 11. Activate the custom dimensions plugin on the left. NOTE: You might see an empty page, but full page refresh works.
 12. Configure as custom dimensions in the Action scope the following: 1: DIMENSION_PACKAGING_ID, 2: DIMENSION_VERSION_ID, 3: DIMENSION_USER_TYPE, 4: DIMENSION_SUBSCRIPTION_TYPE, 5: DIMENSION_COHORT.
 13. Log out of the admin interface.
-14. Extract the created Piwik config.ini.php. j
-Shut down containers with `mvn docker:stop`.
+14. Extract the created Piwik config.ini.php.
+15. Shut down containers with `mvn docker:stop`.

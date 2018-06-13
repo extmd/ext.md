@@ -1,0 +1,317 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>md.ext</groupId>
+    <artifactId>root</artifactId>
+    <version>0-SNAPSHOT</version>
+  </parent>
+  <artifactId>e2e</artifactId>
+  <packaging>pom</packaging>
+  <name>ext.md :: E2E</name>
+  <description>ext.md end-to-end tests using minikube</description>
+  <url>https://github.com/extendedmindtechnologies/ext.md</url>
+  <inceptionYear>2016</inceptionYear>
+
+  <organization>
+    <name>Extended Mind Technologies Oy</name>
+    <url>https://ext.md</url>
+  </organization>
+
+  <scm>
+    <connection>scm:git:git@github.com:extendedmindtechnologies/ext.md.git</connection>
+    <developerConnection>scm:git:git@github.com:extendedmindtechnologies/ext.md.git</developerConnection>
+    <url>git@github.com:extendedmindtechnologies/ext.md.git</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ttiurani</id>
+      <name>Timo Tiuraniemi</name>
+      <email>timo.tiuraniemi@iki.fi</email>
+    </developer>
+  </developers>
+
+  <properties>
+    <e2e.deleteOnly>false</e2e.deleteOnly>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-minikube-context</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <evaluateBeanshell>
+                  <condition>
+                    new java.util.Scanner(Runtime.getRuntime().exec("kubectl config current-context").getInputStream()).useDelimiter("\\A").next().trim().equals("minikube")
+                  </condition>
+                </evaluateBeanshell>
+              </rules>
+              <fail>true</fail>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-helm-packages</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>md.ext</groupId>
+                  <artifactId>helm</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>packages</classifier>
+                  <type>zip</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/helm</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>helm-repo-update</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>repo update</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-init</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>init --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-extendedmind-environment</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-common.yaml -n extendedmind-environment packages/extendedmind-environment-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-prometheus</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-prometheus.yaml -n prometheus stable/prometheus --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-grafana</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-grafana.yaml -n grafana stable/grafana --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-nfs-server-provisioner</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-nfs-server-provisioner.yaml -n nfs-server-provisioner stable/nfs-server-provisioner --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-extendedmind-shared</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-common.yaml -n extendedmind-shared packages/extendedmind-shared-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <!-- <execution> -->
+          <!--   <id>helm-package-mariadb</id> -->
+          <!--   <phase>pre-integration-test</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>exec</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <commandlineArgs>package ../helm/mariadb</commandlineArgs> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
+          <!-- <execution> -->
+          <!--   <id>helm-package-extendedmind-backend</id> -->
+          <!--   <phase>pre-integration-test</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>exec</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <commandlineArgs>package ../helm/extendedmind-backend</commandlineArgs> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
+          <!-- <execution> -->
+          <!--   <id>helm-package-extendedmind-backend-extras</id> -->
+          <!--   <phase>pre-integration-test</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>exec</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <commandlineArgs>package ../helm/extendedmind-backend-extras</commandlineArgs> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
+          <!-- <execution> -->
+          <!--   <id>helm-package-extendedmind-app</id> -->
+          <!--   <phase>pre-integration-test</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>exec</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <commandlineArgs>package ../helm/extendedmind-app</commandlineArgs> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
+          <!-- <execution> -->
+          <!--   <id>helm-package-extendedmind-site</id> -->
+          <!--   <phase>pre-integration-test</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>exec</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <commandlineArgs>package ../helm/extendedmind-site</commandlineArgs> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
+          <!-- <execution> -->
+          <!--   <id>helm-package-extendedmind-site-extras</id> -->
+          <!--   <phase>pre-integration-test</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>exec</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <commandlineArgs>package ../helm/extendedmind-site-extras</commandlineArgs> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
+          <!-- <execution> -->
+          <!--   <id>helm-package-fiak</id> -->
+          <!--   <phase>pre-integration-test</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>exec</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <commandlineArgs>package ../helm/fiak-site</commandlineArgs> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
+          <!-- <execution> -->
+          <!--   <id>helm-package-nginx</id> -->
+          <!--   <phase>pre-integration-test</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>exec</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <commandlineArgs>package ../helm/nginx</commandlineArgs> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
+          <!-- <execution> -->
+          <!--   <id>helm-package-piwik</id> -->
+          <!--   <phase>pre-integration-test</phase> -->
+          <!--   <goals> -->
+          <!--     <goal>exec</goal> -->
+          <!--   </goals> -->
+          <!--   <configuration> -->
+          <!--     <commandlineArgs>package ../helm/piwik</commandlineArgs> -->
+          <!--   </configuration> -->
+          <!-- </execution> -->
+          <execution>
+            <id>helm-delete-extendedmind-shared</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete extendedmind-shared --purge</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-delete-nfs-server-provisioner</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete nfs-server-provisioner --purge</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-delete-grafana</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete grafana --purge</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-delete-prometheus</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete prometheus --purge</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-delete-extendedmind-environement</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete extendedmind-environment --purge</commandlineArgs>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <workingDirectory>${project.build.directory}/helm</workingDirectory>
+          <executable>helm</executable>
+          <background>false</background>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

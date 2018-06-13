@@ -270,6 +270,7 @@
             </goals>
             <configuration>
               <nodeVersion>${node.version}</nodeVersion>
+              <npmVersion>${npm.version}</npmVersion>
             </configuration>
           </execution>
           <execution>
@@ -317,7 +318,7 @@
               <name>quay.io/extmd/app</name>
               <alias>extmd-app</alias>
               <build>
-                <from>quay.io/extendedmind/data-volume:dv-3.5-1</from>
+                <from>quay.io/extendedmind/data-volume:dv-3.7</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
@@ -342,7 +343,7 @@
               <name>quay.io/extmd/site-static</name>
               <alias>extmd-site-static</alias>
               <build>
-                <from>quay.io/extendedmind/data-volume:dv-3.5-1</from>
+                <from>quay.io/extendedmind/data-volume:dv-3.7</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
@@ -367,7 +368,7 @@
               <name>quay.io/extmd/site</name>
               <alias>extmd-site</alias>
               <build>
-                <from>quay.io/extendedmind/node:node-7.10.0-1</from>
+                <from>quay.io/extendedmind/node:node-10.4.0-3</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
@@ -399,7 +400,7 @@
               <name>quay.io/extmd/etc-init</name>
               <alias>etc-init</alias>
               <build>
-                <from>quay.io/extendedmind/tar-curl-rsync:tcr-4</from>
+                <from>quay.io/extendedmind/tar-curl-rsync:tcr-5</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
@@ -422,7 +423,7 @@
               <name>quay.io/extmd/piwik-init</name>
               <alias>piwik-init</alias>
               <build>
-                <from>quay.io/extendedmind/tar-curl-rsync:tcr-4</from>
+                <from>quay.io/extendedmind/tar-curl-rsync:tcr-5</from>
                 <maintainer>timo.tiuraniemi@iki.fi</maintainer>
                 <tags>
                   <tag>latest</tag>
