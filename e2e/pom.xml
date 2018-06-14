@@ -81,6 +81,14 @@
                   <overWrite>true</overWrite>
                   <outputDirectory>${project.build.directory}/helm</outputDirectory>
                 </artifactItem>
+                <artifactItem>
+                  <groupId>org.extendedmind</groupId>
+                  <artifactId>backend</artifactId>
+                  <type>test-jar</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                  <includes>*.tar.gz</includes>
+                </artifactItem>
               </artifactItems>
             </configuration>
           </execution>
@@ -90,6 +98,18 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <executions>
+          <execution>
+            <id>minikube-copy-neo4j-test-database</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>/bin/sh</executable>
+              <commandlineArgs>-c 'scp -i $(minikube ssh-key) -o StrictHostKeyChecking=no -o "UserKnownHostsFile /dev/null" ${project.build.directory}/neo4j-test.tar.gz docker@$(minikube ip):/home/docker/neo4j-test.tar.gz'</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
           <execution>
             <id>helm-repo-update</id>
             <phase>pre-integration-test</phase>
@@ -165,26 +185,29 @@
               <skip>${e2e.deleteOnly}</skip>
             </configuration>
           </execution>
-          <!-- <execution> -->
-          <!--   <id>helm-package-mariadb</id> -->
-          <!--   <phase>pre-integration-test</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>exec</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <commandlineArgs>package ../helm/mariadb</commandlineArgs> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
-          <!-- <execution> -->
-          <!--   <id>helm-package-extendedmind-backend</id> -->
-          <!--   <phase>pre-integration-test</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>exec</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <commandlineArgs>package ../helm/extendedmind-backend</commandlineArgs> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
+          <execution>
+            <id>helm-install-extendedmind-backend-ha-bootstrap</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-ha-bootstrap-restore.yaml -n extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-extendedmind-backend-ha</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -f sources/values-ha.yaml extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+
           <!-- <execution> -->
           <!--   <id>helm-package-extendedmind-backend-extras</id> -->
           <!--   <phase>pre-integration-test</phase> -->
@@ -255,6 +278,16 @@
           <!--     <commandlineArgs>package ../helm/piwik</commandlineArgs> -->
           <!--   </configuration> -->
           <!-- </execution> -->
+          <execution>
+            <id>helm-delete-extendedmind-backend</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete extendedmind-backend --purge</commandlineArgs>
+            </configuration>
+          </execution>
           <execution>
             <id>helm-delete-extendedmind-shared</id>
             <phase>post-integration-test</phase>

@@ -40,7 +40,7 @@
     <!-- Incrementing build number does not happen by default, only when there is a new version set with mvn versions:set -DnewVersion=X which
       creates a pom.xml.versionsBackup file which then activates a profile build-number-activation. -->
     <buildNumberIncrementSkip>true</buildNumberIncrementSkip>
-    <extendedmind.analytics>true</extendedmind.analytics>
+    <extendedmind.analytics>false</extendedmind.analytics>
     <extendedmind.app.package>org.extendedmind</extendedmind.app.package>
     <extendedmind.app.id>extmd</extendedmind.app.id>
     <extendedmind.app.name>extended mind</extendedmind.app.name>
