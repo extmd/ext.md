@@ -207,7 +207,17 @@
               <skip>${e2e.deleteOnly}</skip>
             </configuration>
           </execution>
-
+          <execution>
+            <id>helm-install-extendedmind-backend-extras</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-ha.yaml -n extendedmind-backend-extras packages/extendedmind-backend-extras-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
           <!-- <execution> -->
           <!--   <id>helm-package-extendedmind-backend-extras</id> -->
           <!--   <phase>pre-integration-test</phase> -->
@@ -278,6 +288,16 @@
           <!--     <commandlineArgs>package ../helm/piwik</commandlineArgs> -->
           <!--   </configuration> -->
           <!-- </execution> -->
+          <execution>
+            <id>helm-delete-extendedmind-backend-extras</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete extendedmind-backend-extras --purge</commandlineArgs>
+            </configuration>
+          </execution>
           <execution>
             <id>helm-delete-extendedmind-backend</id>
             <phase>post-integration-test</phase>
