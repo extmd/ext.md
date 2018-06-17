@@ -1,18 +1,14 @@
-## nginx configuration
-## Ref: https://github.com/kubernetes/ingress/blob/master/controllers/nginx/configuration.md
-##
+## nginx ingress configuration
+## Ref: https://github.com/kubernetes/charts/blob/master/stable/nginx-ingress/values.yaml
 controller:
- 
+  kind: DaemonSet
+  daemonset:
+    useHostPort: true
   stats:
     enabled: true
-
-  ## If controller.stats.enabled = true and controller.metrics.enabled = true, Prometheus metrics will be exported
-  ##
   metrics:
     enabled: true
-
     service:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "10254"
-

@@ -58,22 +58,6 @@
   <link rel="icon" type="image/png" href="static/favicon/favicon-32x32.png" sizes="32x32">
   <meta name="msapplication-TileColor" content="#2b5797">
   <meta name="msapplication-TileImage" content="static/favicon/mstile-144x144.png">
-
-  <script>
-    var _paq = _paq || [];
-    _paq.push(['setRequestMethod', 'POST']);
-    _paq.push(['disableCookies']);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u="//{{ domain }}/analytics/";
-      _paq.push(['setTrackerUrl', u+'piwik.php']);
-      _paq.push(['setSiteId', 5]);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-    })();
-  </script>
-
 </head>
 
 <body {% block bodyattrs %}{% endblock %}>

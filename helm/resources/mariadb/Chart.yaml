@@ -1,9 +1,0 @@
-name: mariadb
-version: "1.0"
-description: Custom MariaDB Galera cluster
-home: "https://github.com/extendedmindtechnologies/ext.md"
-sources:
-- "git@github.com:extendedmindtechnologies/ext.md.git"
-maintainers:
-- name: "Timo Tiuraniemi"
-  email: "timo.tiuraniemi@iki.fi"

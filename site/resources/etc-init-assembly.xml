@@ -24,13 +24,6 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.build.directory}/filtered-resources</directory>
-      <outputDirectory>/app/etc-init/etc/piwik/templates</outputDirectory>
-      <includes>
-        <include>piwik.config.ini.php</include>
-      </includes>
-    </fileSet>
-    <fileSet>
       <directory>${project.build.directory}/fiak-site-config</directory>
       <outputDirectory>/app/etc-init/etc/nginx/sites-enabled/fiak-site</outputDirectory>
       <includes>

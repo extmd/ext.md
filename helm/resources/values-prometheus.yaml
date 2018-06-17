@@ -1,3 +1,5 @@
+## prometheus configuration
+## Ref: https://github.com/kubernetes/charts/blob/master/stable/prometheus/values.yaml
 alertmanagerFiles:
   alertmanager.yml:
     global:

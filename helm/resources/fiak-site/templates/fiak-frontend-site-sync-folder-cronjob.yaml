@@ -1,0 +1,33 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: fiak-sync-folder
+spec:
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            project: fiak-site
+            group: fi.filosofianakatemia
+        spec:
+          containers:
+            - name: sync-site
+              image: quay.io/extendedmind/sync-folder:{{ .Values.syncFolderVersion }}
+              args:
+              - {{ .Values.fiakNfsSyncSource | quote }}
+              - "/app/site-public/fiak/tiedostot"
+{{ if .Values.fsPreCommand }}
+              - {{ .Values.fsPreCommand | quote }}
+{{ end }}
+              volumeMounts:
+              - name: publicdir
+                mountPath: /app/site-public
+          restartPolicy: Never
+          volumes:
+          - name: publicdir
+            persistentVolumeClaim:
+              claimName: shared
+  schedule: '*/1 * * * *'
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1

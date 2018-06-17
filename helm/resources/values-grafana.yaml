@@ -1,3 +1,5 @@
+## grafana configuration
+## Ref: https://github.com/kubernetes/charts/blob/master/stable/grafana/values.yaml
 persistence:
   enabled: true
   storageClassName: standard

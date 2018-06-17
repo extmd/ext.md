@@ -19,33 +19,7 @@ spec:
         volumeMounts:
         - name: enableddir
           mountPath: "/etc/nginx/sites-enabled"
-        - name: piwiktemplatesdir
-          mountPath: "/etc/piwik/templates"
       containers:
-      - name: piwik
-        image: quay.io/extendedmind/piwik:piwik-3.0.3
-        env:
-          - name: EXTENDEDMIND_DB_PIWIKUSERNAME
-            value: {{ .Values.piwikUsername | quote }}
-          - name: EXTENDEDMIND_DB_PIWIKPASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: "nginx-secrets"
-                key: piwikPassword
-          - name: EXTENDEDMIND_DB_PIWIKSALT
-            value: {{ .Values.piwikSalt | quote }}
-          - name: EXTENDEDMIND_DB_PIWIKSECURE
-            value: {{ .Values.piwikSecure | quote }}
-          - name: EXTENDEDMIND_HOST
-            value: {{ .Values.urlOrigin | quote }}
-        ports:
-        - name: piwik
-          containerPort: 9000
-        volumeMounts:
-        - name: piwiktemplatesdir
-          mountPath: "/etc/piwik/templates"
-        - name: piwikdir
-          mountPath: "/var/www/html"
       - name: nginx
         image: quay.io/extendedmind/nginx:nginx-1.13.0-1
         ports:
@@ -56,9 +30,6 @@ spec:
         - name: fiak
           containerPort: 8009
         volumeMounts:
-        - name: piwikdir
-          mountPath: "/var/www/html"
-          readOnly: true
         - name: enableddir
           mountPath: "/etc/nginx/sites-enabled"
           readOnly: true
@@ -75,10 +46,6 @@ spec:
           readOnly: true
       volumes:
       - name: enableddir
-        emptyDir: {}
-      - name: piwiktemplatesdir
-        emptyDir: {}
-      - name: piwikdir
         emptyDir: {}
       - name: publicdir
         persistentVolumeClaim:

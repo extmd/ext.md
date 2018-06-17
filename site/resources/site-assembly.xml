@@ -39,12 +39,5 @@
         <include>nginx.extendedmind.conf</include>
       </includes>
     </fileSet>
-    <fileSet>
-      <directory>${project.build.directory}/filtered-resources</directory>
-      <outputDirectory>etc/piwik/templates</outputDirectory>
-      <includes>
-        <include>piwik.config.ini.php</include>
-      </includes>
-    </fileSet>
   </fileSets>
 </assembly>

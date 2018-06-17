@@ -12,7 +12,6 @@ siteStaticVersion: "${extmd.siteVersion}"
 siteVersion: "${extmd.siteVersion}"
 appVersion: "${extmd.appVersion}"
 etcInitVersion: "${extmd.etcInitVersion}"
-piwikInitVersion: "${extmd.piwikInitVersion}"
 fiakVersion: "${fiak.version}"
 
 # App settings
@@ -22,14 +21,9 @@ extraAppJobSuffix: "-${buildNumber}"
 siteHostName: "extmd-site"
 extraSiteStaticJobSuffix: "-${buildNumber}"
 
-# Piwik settings
-piwikSalt: ${extmd.piwikSalt}
-piwikSecure: ${extmd.piwikSecure}
-piwikUsername: "piwik"
-piwikPassword: "${extmd.mariaDbPiwikPassword}"
-
 # Fiak settings
 fiakFrontendReplicas: ${extmd.fiakFrontendReplicas}
+fiakNfsSyncSource: ${extmd.fiakNfsSyncSource}
 
 # Nginx passwords
 analyticspass: "${extmd.analyticsPass}"

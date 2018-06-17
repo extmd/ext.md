@@ -84,6 +84,7 @@
                 <artifactItem>
                   <groupId>org.extendedmind</groupId>
                   <artifactId>backend</artifactId>
+                  <version>${project.version}</version>
                   <type>test-jar</type>
                   <overWrite>true</overWrite>
                   <outputDirectory>${project.build.directory}</outputDirectory>
@@ -164,6 +165,18 @@
             </configuration>
           </execution>
           <execution>
+            <id>helm-install-nginx-ingress</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <!-- NOTE: helm wait flag causes timeout -->
+              <commandlineArgs>install -f sources/values-nginx-ingress.yaml -n nginx-ingress stable/nginx-ingress</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
             <id>helm-install-nfs-server-provisioner</id>
             <phase>pre-integration-test</phase>
             <goals>
@@ -186,13 +199,36 @@
             </configuration>
           </execution>
           <execution>
+            <id>helm-install-extendedmind-backend-upgrade-restore</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-upgrade-restore.yaml -f sources/values-extmd.yaml -n extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <!-- A delete is required here to get HA_BOOTSTRAP mode to begin from backend-0, so that it becomes master. pvc's remain, so no data is lost. -->
+          <execution>
+            <id>helm-delete-extendedmind-backend-upgrade</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete extendedmind-backend --purge</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
             <id>helm-install-extendedmind-backend-ha-bootstrap</id>
             <phase>pre-integration-test</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
-              <commandlineArgs>install -f sources/values-ha-bootstrap-restore.yaml -n extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+              <commandlineArgs>install -f sources/values-ha-bootstrap.yaml -f sources/values-extmd.yaml -n extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
               <skip>${e2e.deleteOnly}</skip>
             </configuration>
           </execution>
@@ -203,7 +239,7 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <commandlineArgs>upgrade -f sources/values-ha.yaml extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+              <commandlineArgs>upgrade -f sources/values-ha.yaml -f sources/values-extmd.yaml extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
               <skip>${e2e.deleteOnly}</skip>
             </configuration>
           </execution>
@@ -214,80 +250,94 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <commandlineArgs>install -f sources/values-ha.yaml -n extendedmind-backend-extras packages/extendedmind-backend-extras-1.0.tgz --wait</commandlineArgs>
+              <commandlineArgs>install -f sources/values-ha.yaml -f sources/values-extmd.yaml -n extendedmind-backend-extras packages/extendedmind-backend-extras-1.0.tgz --wait</commandlineArgs>
               <skip>${e2e.deleteOnly}</skip>
             </configuration>
           </execution>
-          <!-- <execution> -->
-          <!--   <id>helm-package-extendedmind-backend-extras</id> -->
-          <!--   <phase>pre-integration-test</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>exec</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <commandlineArgs>package ../helm/extendedmind-backend-extras</commandlineArgs> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
-          <!-- <execution> -->
-          <!--   <id>helm-package-extendedmind-app</id> -->
-          <!--   <phase>pre-integration-test</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>exec</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <commandlineArgs>package ../helm/extendedmind-app</commandlineArgs> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
-          <!-- <execution> -->
-          <!--   <id>helm-package-extendedmind-site</id> -->
-          <!--   <phase>pre-integration-test</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>exec</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <commandlineArgs>package ../helm/extendedmind-site</commandlineArgs> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
-          <!-- <execution> -->
-          <!--   <id>helm-package-extendedmind-site-extras</id> -->
-          <!--   <phase>pre-integration-test</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>exec</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <commandlineArgs>package ../helm/extendedmind-site-extras</commandlineArgs> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
-          <!-- <execution> -->
-          <!--   <id>helm-package-fiak</id> -->
-          <!--   <phase>pre-integration-test</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>exec</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <commandlineArgs>package ../helm/fiak-site</commandlineArgs> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
-          <!-- <execution> -->
-          <!--   <id>helm-package-nginx</id> -->
-          <!--   <phase>pre-integration-test</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>exec</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <commandlineArgs>package ../helm/nginx</commandlineArgs> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
-          <!-- <execution> -->
-          <!--   <id>helm-package-piwik</id> -->
-          <!--   <phase>pre-integration-test</phase> -->
-          <!--   <goals> -->
-          <!--     <goal>exec</goal> -->
-          <!--   </goals> -->
-          <!--   <configuration> -->
-          <!--     <commandlineArgs>package ../helm/piwik</commandlineArgs> -->
-          <!--   </configuration> -->
-          <!-- </execution> -->
+          <execution>
+            <id>helm-install-extendedmind-app</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-frontend.yaml -f sources/values-extmd.yaml -n extendedmind-app packages/extendedmind-app-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-extendedmind-site</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-frontend.yaml -f sources/values-extmd.yaml -n extendedmind-site packages/extendedmind-site-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-fiak-site</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-extmd.yaml -n fiak-site packages/fiak-site-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-nginx</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-extmd.yaml -n nginx packages/nginx-1.0.tgz --wait</commandlineArgs>
+              <skip>${e2e.deleteOnly}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-delete-nginx</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete nginx --purge</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-delete-fiak-site</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete fiak-site --purge</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-delete-extendedmind-site</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete extendedmind-site --purge</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-delete-extendedmind-app</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete extendedmind-app --purge</commandlineArgs>
+            </configuration>
+          </execution>
           <execution>
             <id>helm-delete-extendedmind-backend-extras</id>
             <phase>post-integration-test</phase>
@@ -326,6 +376,16 @@
             </goals>
             <configuration>
               <commandlineArgs>delete nfs-server-provisioner --purge</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-delete-nginx-ingress</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete nginx-ingress --purge</commandlineArgs>
             </configuration>
           </execution>
           <execution>

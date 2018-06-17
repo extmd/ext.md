@@ -36,16 +36,16 @@
     <!-- Lists the versions of Docker containers deployed.
          NOTE: fiak.version is specified in the parent pom -->
     <!-- extendedmind containers -->
-    <extendedmind.backendDiscoveryVersion>1.9.15</extendedmind.backendDiscoveryVersion>
-    <extendedmind.backendRestoreVersion>1.9.15</extendedmind.backendRestoreVersion>
-    <extendedmind.backendVersion>1.9.15.1</extendedmind.backendVersion>
-    <extendedmind.backendBackupVersion>1.9.15</extendedmind.backendBackupVersion>
-    <extendedmind.syncFolderVersion>1.9.14</extendedmind.syncFolderVersion>
+    <extendedmind.backendVersion>1.9.17</extendedmind.backendVersion>
+    <extendedmind.backendDiscoveryVersion>1.9.17</extendedmind.backendDiscoveryVersion>
+    <extendedmind.backendRestoreVersion>1.9.17</extendedmind.backendRestoreVersion>
+    <extendedmind.backendBackupVersion>1.9.17</extendedmind.backendBackupVersion>
+    <extendedmind.syncFolderVersion>1.9.17</extendedmind.syncFolderVersion>
+
     <!-- ext.md containers -->
-    <extmd.siteVersion>1.9.16</extmd.siteVersion>
-    <extmd.appVersion>1.9.16</extmd.appVersion>
-    <extmd.etcInitVersion>1.9.16</extmd.etcInitVersion>
-    <extmd.piwikInitVersion>1.9.16-1</extmd.piwikInitVersion>
+    <extmd.siteVersion>1.9.17</extmd.siteVersion>
+    <extmd.appVersion>1.9.17</extmd.appVersion>
+    <extmd.etcInitVersion>1.9.17</extmd.etcInitVersion>
   </properties>
 
   <build>
@@ -224,16 +224,6 @@
             </configuration>
           </execution>
           <execution>
-            <id>helm-package-extendedmind-site-extras</id>
-            <phase>package</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <commandlineArgs>package ../helm/extendedmind-site-extras</commandlineArgs>
-            </configuration>
-          </execution>
-          <execution>
             <id>helm-package-fiak</id>
             <phase>package</phase>
             <goals>
@@ -251,16 +241,6 @@
             </goals>
             <configuration>
               <commandlineArgs>package ../helm/nginx</commandlineArgs>
-            </configuration>
-          </execution>
-          <execution>
-            <id>helm-package-piwik</id>
-            <phase>package</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <commandlineArgs>package ../helm/piwik</commandlineArgs>
             </configuration>
           </execution>
         </executions>
