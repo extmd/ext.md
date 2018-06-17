@@ -243,6 +243,16 @@
               <commandlineArgs>package ../helm/nginx</commandlineArgs>
             </configuration>
           </execution>
+          <execution>
+            <id>helm-package-domains</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/domains</commandlineArgs>
+            </configuration>
+          </execution>
         </executions>
         <configuration>
           <workingDirectory>${project.build.directory}/helm-packages</workingDirectory>

@@ -1,0 +1,280 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>md.ext</groupId>
+    <artifactId>root</artifactId>
+    <version>1.9.17</version>
+  </parent>
+  <artifactId>deploy</artifactId>
+  <packaging>pom</packaging>
+  <name>ext.md :: deploy</name>
+  <description>ext.md deploy</description>
+  <url>https://github.com/extendedmindtechnologies/ext.md</url>
+  <inceptionYear>2016</inceptionYear>
+
+  <organization>
+    <name>Extended Mind Technologies Oy</name>
+    <url>https://ext.md</url>
+  </organization>
+
+  <scm>
+    <connection>scm:git:git@github.com:extendedmindtechnologies/ext.md.git</connection>
+    <developerConnection>scm:git:git@github.com:extendedmindtechnologies/ext.md.git</developerConnection>
+    <url>git@github.com:extendedmindtechnologies/ext.md.git</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ttiurani</id>
+      <name>Timo Tiuraniemi</name>
+      <email>timo.tiuraniemi@iki.fi</email>
+    </developer>
+  </developers>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-kubectl-context</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <evaluateBeanshell>
+                  <condition>
+                    new java.util.Scanner(Runtime.getRuntime().exec("kubectl config current-context").getInputStream()).useDelimiter("\\A").next().trim().equals("${deployContext}")
+                  </condition>
+                </evaluateBeanshell>
+              </rules>
+              <fail>true</fail>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-helm-packages</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>md.ext</groupId>
+                  <artifactId>helm</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>packages</classifier>
+                  <type>zip</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/helm</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>helm-repo-update</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>repo update</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-init</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>init --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-extendedmind-environment</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-common.yaml extendedmind-environment packages/extendedmind-environment-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-prometheus</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-prometheus.yaml prometheus stable/prometheus --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-grafana</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-grafana.yaml grafana stable/grafana --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-nginx-ingress</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <!-- NOTE: helm wait flag causes timeout -->
+              <commandlineArgs>upgrade -i -f sources/values-nginx-ingress.yaml nginx-ingress stable/nginx-ingress</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-nfs-server-provisioner</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-nfs-server-provisioner.yaml nfs-server-provisioner stable/nfs-server-provisioner --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-extendedmind-shared</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-common.yaml extendedmind-shared packages/extendedmind-shared-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-extendedmind-backend-upgrade-restore</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-upgrade-restore.yaml -f sources/values-extmd.yaml -n extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <!-- A delete is required here to get HA_BOOTSTRAP mode to begin from backend-0, so that it becomes master. pvc's remain, so no data is lost. -->
+          <execution>
+            <id>helm-delete-extendedmind-backend-upgrade</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>delete extendedmind-backend --purge</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-extendedmind-backend-ha-bootstrap</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-ha-bootstrap.yaml -f sources/values-extmd.yaml -n extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-extendedmind-backend-ha</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -f sources/values-ha.yaml -f sources/values-extmd.yaml extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-extendedmind-backend-extras</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-ha.yaml -f sources/values-extmd.yaml extendedmind-backend-extras packages/extendedmind-backend-extras-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-extendedmind-app</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-frontend.yaml -f sources/values-extmd.yaml extendedmind-app packages/extendedmind-app-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-extendedmind-site</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-frontend.yaml -f sources/values-extmd.yaml extendedmind-site packages/extendedmind-site-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-fiak-site</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-frontend.yaml -f sources/values-extmd.yaml fiak-site packages/fiak-site-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-nginx</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-frontend.yaml -f sources/values-extmd.yaml nginx packages/nginx-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-domains</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-extmd.yaml domains packages/domains-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <workingDirectory>${project.build.directory}/helm</workingDirectory>
+          <executable>helm</executable>
+          <background>false</background>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

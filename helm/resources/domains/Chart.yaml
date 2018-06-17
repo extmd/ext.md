@@ -1,0 +1,9 @@
+name: "domains"
+home: "https://github.com/extendedmindtechnologies/ext.md"
+sources:
+- "git@github.com:extendedmindtechnologies/ext.md.git"
+version: "1.0"
+description: "domains"
+maintainers:
+- name: "Timo Tiuraniemi"
+  email: "timo.tiuraniemi@iki.fi"

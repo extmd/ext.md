@@ -31,4 +31,5 @@ dashboardpass: "${extmd.dashboardPass}"
 urlOrigin: "${extendedmind.urlOrigin}"
 
 # ACME settings
+acmeServer: "${extmd.acmeServer}"
 acmeEmail: "${extmd.acmeEmail}"

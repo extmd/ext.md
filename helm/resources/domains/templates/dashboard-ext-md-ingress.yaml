@@ -3,13 +3,14 @@ kind: Ingress
 metadata:
   name: dashboard
   annotations:
+    certmanager.k8s.io/cluster-issuer: letsencrypt
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:
     - dashboard.ext.md
-    secretName: dashbboard-tls
+    secretName: dashboard-tls
   rules:
   - host: dashboard.ext.md
     http:
