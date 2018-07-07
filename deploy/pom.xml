@@ -4,9 +4,10 @@
   <parent>
     <groupId>md.ext</groupId>
     <artifactId>root</artifactId>
-    <version>1.9.17</version>
+    <version>0-SNAPSHOT</version>
   </parent>
   <artifactId>deploy</artifactId>
+  <version>0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ext.md :: deploy</name>
   <description>ext.md deploy</description>
@@ -189,13 +190,13 @@
             </configuration>
           </execution>
           <execution>
-            <id>helm-install-extendedmind-backend-ha-bootstrap</id>
+            <id>helm-install-extendedmind-backend-ha-bootstrap-restore</id>
             <phase>compile</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
-              <commandlineArgs>install -f sources/values-ha-bootstrap.yaml -f sources/values-extmd.yaml -n extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+              <commandlineArgs>install -f sources/values-ha-bootstrap-restore.yaml -f sources/values-extmd.yaml -n extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
             </configuration>
           </execution>
           <execution>
