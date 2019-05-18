@@ -190,6 +190,16 @@
             </configuration>
           </execution>
           <execution>
+            <id>helm-install-extendedmind-backend-ha-bootstrap</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-ha-bootstrap.yaml -f sources/values-extmd.yaml -n extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
             <id>helm-install-extendedmind-backend-ha-bootstrap-restore</id>
             <phase>compile</phase>
             <goals>

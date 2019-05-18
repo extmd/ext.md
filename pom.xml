@@ -45,8 +45,8 @@
     <extendedmind.app.id>extmd</extendedmind.app.id>
     <extendedmind.app.name>extended mind</extendedmind.app.name>
     <extendedmind.url>https://ext.md</extendedmind.url>
-    <extendedmind.helm.properties>development</extendedmind.helm.properties>
-    <fiak.version>2.4.7</fiak.version>
+    <extendedmind.helm.properties>production</extendedmind.helm.properties>
+    <fiak.version>2.6.5</fiak.version>
   </properties>
 
   <profiles>
