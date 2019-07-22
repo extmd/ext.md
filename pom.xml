@@ -35,8 +35,8 @@
     <root.project.basedir>${project.basedir}</root.project.basedir>
     <!-- 0 is the default build number that is used when not running a build from the root, using buildnumber-maven-plugin below. -->
     <buildNumber>0</buildNumber>
-    <node.version>v10.4.0</node.version>
-    <npm.version>6.1.0</npm.version>
+    <node.version>v10.16.0</node.version>
+    <npm.version>6.9.0</npm.version>
     <!-- Incrementing build number does not happen by default, only when there is a new version set with mvn versions:set -DnewVersion=X which
       creates a pom.xml.versionsBackup file which then activates a profile build-number-activation. -->
     <buildNumberIncrementSkip>true</buildNumberIncrementSkip>
@@ -46,7 +46,7 @@
     <extendedmind.app.name>extended mind</extendedmind.app.name>
     <extendedmind.url>https://ext.md</extendedmind.url>
     <extendedmind.helm.properties>production</extendedmind.helm.properties>
-    <fiak.version>2.6.5</fiak.version>
+    <fiak.version>2.6.7</fiak.version>
   </properties>
 
   <profiles>
