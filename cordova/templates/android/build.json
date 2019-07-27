@@ -1,0 +1,11 @@
+{
+  "android": {
+    "release": {
+      "keystore": "${settings.servers.android-developer-certificate.privateKey}",
+      "storePassword": "${settings.servers.android-developer-certificate.passphrase}",
+      "alias": "${settings.servers.android-developer-certificate.username}",
+      "password": "${settings.servers.android-developer-certificate.password}",
+      "keystoreType": ""
+    }
+  }
+}

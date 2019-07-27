@@ -67,10 +67,6 @@ function HookService($q, AnalyticsService, packaging) {
           var src = getAudioUrl();
           entryControllerScope.theme = new Media(src, function(){
             if (extendedMindAudio !== undefined) extendedMindAudio.ended = true;
-            if (packaging === 'android-cordova'){
-              // TODO: Fork and improve KeepScreenOnPlugin
-              cordova.exec(null, null, 'KeepScreenOn', 'CancelKeepScreenOn', ['']);
-            }
           });
           extendedMindAudio = {
             ended: false,
@@ -94,8 +90,6 @@ function HookService($q, AnalyticsService, packaging) {
       }
       if (packaging === 'android-cordova'){
         extendedMindAnimationDelay = 0.1;
-        // TODO: Fork and improve KeepScreenOnPlugin
-        cordova.exec(null, null, 'KeepScreenOn', 'KeepScreenOn', ['']);
       }
       else if (packaging === 'ios-cordova'){
         extendedMindAnimationDelay = 0.05;

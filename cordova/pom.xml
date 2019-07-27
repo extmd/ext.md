@@ -33,12 +33,8 @@
     </developer>
   </developers>
 
-  <properties>
-    <skipRestoreIos>false</skipRestoreIos>
-  </properties>
-
   <build>
-   <sourceDirectory>${basedir}/src</sourceDirectory>
+    <sourceDirectory>${basedir}/src</sourceDirectory>
     <plugins>
       <plugin>
         <groupId>com.github.eirslett</groupId>
@@ -64,8 +60,29 @@
               <arguments>install</arguments>
             </configuration>
           </execution>
+          <execution>
+            <id>npm-add-android</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>compile</phase>
+            <configuration>
+              <arguments>run add-android</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm-build</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>compile</phase>
+            <configuration>
+              <arguments>run build</arguments>
+            </configuration>
+          </execution>
         </executions>
         <configuration>
+          <installDirectory>${project.build.directory}</installDirectory>
           <workingDirectory>src</workingDirectory>
         </configuration>
       </plugin>
@@ -93,6 +110,19 @@
               <failIfNoMatch>false</failIfNoMatch>
             </configuration>
           </execution>
+          <execution>
+            <id>replace-trimmed-0-with-1</id>
+            <goals>
+              <goal>regex-property</goal>
+            </goals>
+            <configuration>
+              <name>project.version.trimmed</name>
+              <value>${project.version.trimmed}</value>
+              <regex>^0$</regex>
+              <replacement>1</replacement>
+              <failIfNoMatch>false</failIfNoMatch>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -114,46 +144,6 @@
                   <filtering>true</filtering>
                   <includes>
                     <include>config.xml</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          <execution>
-            <id>copy-ios-assets</id>
-            <phase>process-sources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.basedir}/src/assets/build/ios</outputDirectory>
-              <overwrite>true</overwrite>
-              <resources>
-                <resource>
-                  <directory>${project.basedir}/templates/ios</directory>
-                  <filtering>true</filtering>
-                  <excludes>
-                    <exclude>index.html</exclude>
-                  </excludes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          <execution>
-            <id>copy-ios-index-html</id>
-            <phase>process-sources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.basedir}/src/merges/ios</outputDirectory>
-              <overwrite>true</overwrite>
-              <resources>
-                <resource>
-                  <directory>${project.basedir}/templates/ios</directory>
-                  <filtering>true</filtering>
-                  <includes>
-                    <include>index.html</include>
                   </includes>
                 </resource>
               </resources>
@@ -227,150 +217,48 @@
               </artifactItems>
             </configuration>
           </execution>
-          <execution>
-            <id>unpack-extendedmind-cordova</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.extendedmind.frontend</groupId>
-                  <artifactId>frontend-cordova</artifactId>
-                  <version>${project.version}</version>
-                  <classifier>sources</classifier>
-                  <type>zip</type>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.basedir}</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>cordova-android-prepare</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>sh</executable>
-              <commandlineArgs>scripts/prepare-android.sh</commandlineArgs>
-              <background>false</background>
-            </configuration>
-          </execution>
-          <execution>
-            <id>cordova-ios-move-sources-to-temp</id>
-            <!--phase>process-resources</phase-->
-            <phase>initialize</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>mv</executable>
-              <commandlineArgs>${basedir}/src/platforms/ios ${basedir}/src/platforms/ios-tmp</commandlineArgs>
-              <background>false</background>
-            </configuration>
-          </execution>
-          <execution>
-            <id>cordova-ios-prepare</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>sh</executable>
-              <commandlineArgs>scripts/prepare-ios.sh ${extendedmind.app.id}</commandlineArgs>
-              <background>false</background>
-            </configuration>
-          </execution>
-          <execution>
-            <id>cordova-add-plugins</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>sh</executable>
-              <commandlineArgs>scripts/add-plugins.sh</commandlineArgs>
-              <background>false</background>
-            </configuration>
-          </execution>
-          <execution>
-            <id>cordova-ios-move-temp-sources-back</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <skip>${skipRestoreIos}</skip>
-              <executable>sh</executable>
-              <commandlineArgs>${project.basedir}/restore-ios-sources.sh</commandlineArgs>
-              <background>false</background>
-            </configuration>
-          </execution>
-          <execution>
-            <id>cordova-android-build</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>sh</executable>
-              <commandlineArgs>scripts/build-android.sh</commandlineArgs>
-              <background>false</background>
-            </configuration>
-          </execution>
-          <execution>
-            <id>cordova-ios-build</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>sh</executable>
-              <commandlineArgs>scripts/build-ios.sh</commandlineArgs>
-              <background>false</background>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+      <!-- <plugin> -->
+      <!--   <groupId>org.codehaus.mojo</groupId> -->
+      <!--   <artifactId>exec-maven-plugin</artifactId> -->
+      <!--   <executions> -->
+      <!--     <execution> -->
+      <!--       <id>cordova-android-prepare</id> -->
+      <!--       <phase>process-resources</phase> -->
+      <!--       <goals> -->
+      <!--         <goal>exec</goal> -->
+      <!--       </goals> -->
+      <!--       <configuration> -->
+      <!--         <executable>sh</executable> -->
+      <!--         <commandlineArgs>scripts/prepare-android.sh</commandlineArgs> -->
+      <!--         <background>false</background> -->
+      <!--       </configuration> -->
+      <!--     </execution> -->
+      <!--     <execution> -->
+      <!--       <id>cordova-android-build</id> -->
+      <!--       <phase>compile</phase> -->
+      <!--       <goals> -->
+      <!--         <goal>exec</goal> -->
+      <!--       </goals> -->
+      <!--       <configuration> -->
+      <!--         <executable>sh</executable> -->
+      <!--         <commandlineArgs>scripts/build-android.sh</commandlineArgs> -->
+      <!--         <background>false</background> -->
+      <!--       </configuration> -->
+      <!--     </execution> -->
+      <!--   </executions> -->
+      <!-- </plugin> -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clean-plugin</artifactId>
         <configuration>
           <filesets>
             <fileset>
-              <directory>${basedir}/templates</directory>
-            </fileset>
-            <fileset>
-              <directory>${basedir}/scripts</directory>
-            </fileset>
-            <fileset>
-              <directory>${basedir}/src/etc</directory>
-            </fileset>
-            <fileset>
-              <directory>${basedir}/src/node</directory>
-            </fileset>
-            <fileset>
               <directory>${basedir}/src/node_modules</directory>
             </fileset>
             <fileset>
-              <directory>${basedir}/src/platforms/ios</directory>
-               <excludes>
-                <exclude>extmd/extmd.entitlements</exclude>
-                <exclude>extmd-share/**</exclude>
-                <exclude>extmd.xcodeproj/project.pbxproj</exclude>
-              </excludes>
-            </fileset>
-            <fileset>
-              <directory>${basedir}/src/platforms/android</directory>
+              <directory>${basedir}/src/platforms</directory>
             </fileset>
             <fileset>
               <directory>${basedir}/src/plugins</directory>
@@ -380,9 +268,6 @@
             </fileset>
             <fileset>
               <directory>${basedir}/src/www</directory>
-            </fileset>
-            <fileset>
-              <directory>${basedir}/src/assets/fonts</directory>
             </fileset>
             <fileset>
               <directory>${basedir}/src/assets/build</directory>

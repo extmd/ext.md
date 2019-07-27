@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="md.ext" version="${project.version.trimmed}" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>md.ext</name>
+  <description>
+    ext.md
+  </description>
+  <author email="timo@ext.md" href="https://ext.md">
+    Extended Mind
+  </author>
+  <content src="index.html" />
+
+  <!-- full screen settings -->
+  <preference name="orientation" value="portrait" />
+  <preference name="fullscreen" value="true" />
+  <preference name="FullscreenNotImmersive" value="true" />
+  <preference name="DisallowOverscroll" value="true" />
+
+  <!-- cordova-plugin-whitelist  -->
+  <plugin name="cordova-plugin-whitelist" spec="1" />
+  <access origin="*" />
+  <allow-intent href="http://*/*" />
+  <allow-intent href="https://*/*" />
+  <allow-intent href="sms:*" />
+  <allow-intent href="mailto:*" />
+  <allow-intent href="geo:*" />
+
+  <!-- cordova-plugin-splashscreen  -->
+  <preference name="ShowSplashScreenSpinner" value="false" />
+  <preference name="AutoHideSplashScreen" value="false" />
+  <preference name="FadeSplashScreen" value="false"/>
+
+  <!-- Keyboard settings -->
+  <feature name="Keyboard">
+    <param name="ios-package" value="IonicKeyboard" onload="true" />
+  </feature>
+  <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+
+  <!-- cordova-plugin-media brings in cordova-plugin-file which needs this -->
+  <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+
+  <platform name="android">
+    <allow-intent href="market:*" />
+    <!--
+    mdpi    : 48x48 px
+    hdpi    : 72x72 px
+    xhdpi   : 96x96 px
+    xxhdpi  : 144x144 px
+    xxxhdpi : 192x192 px
+    -->
+    <icon src="assets/icons/android/icon-48-mdpi.png" density="mdpi" />
+    <icon src="assets/icons/android/icon-72-hdpi.png" density="hdpi" />
+    <icon src="assets/icons/android/icon-96-xhdpi.png" density="xhdpi" />
+    <icon src="assets/icons/android/icon-144-xxhdpi.png" density="xxhdpi" />
+    <icon src="assets/icons/android/icon-192-xxxhdpi.png" density="xxxhdpi" />
+    <splash src="assets/screens/android/launch-mdpi.png" density="mdpi"/>
+    <splash src="assets/screens/android/launch-hdpi.png" density="hdpi"/>
+    <splash src="assets/screens/android/launch-xhdpi.png" density="xhdpi"/>
+    <splash src="assets/screens/android/launch-xxhdpi.png" density="xxhdpi"/>
+    <splash src="assets/screens/android/launch-xxxhdpi.png" density="xxxhdpi"/>
+  </platform>
+</widget>
