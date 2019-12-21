@@ -98,16 +98,6 @@
             </configuration>
           </execution>
           <execution>
-            <id>helm-init</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <commandlineArgs>init --wait</commandlineArgs>
-            </configuration>
-          </execution>
-          <execution>
             <id>helm-upgrade-extendedmind-environment</id>
             <phase>compile</phase>
             <goals>
@@ -115,26 +105,6 @@
             </goals>
             <configuration>
               <commandlineArgs>upgrade -i -f sources/values-common.yaml extendedmind-environment packages/extendedmind-environment-1.0.tgz --wait</commandlineArgs>
-            </configuration>
-          </execution>
-          <execution>
-            <id>helm-upgrade-prometheus</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <commandlineArgs>upgrade -i -f sources/values-prometheus.yaml prometheus stable/prometheus --wait</commandlineArgs>
-            </configuration>
-          </execution>
-          <execution>
-            <id>helm-upgrade-grafana</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <commandlineArgs>upgrade -i -f sources/values-grafana.yaml grafana stable/grafana --wait</commandlineArgs>
             </configuration>
           </execution>
           <execution>

@@ -4,11 +4,12 @@ controller:
   kind: DaemonSet
   daemonset:
     useHostPort: true
-  stats:
-    enabled: true
   metrics:
-    enabled: true
-    service:
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "10254"
+    enabled: false
+  resources:
+    limits:
+      cpu: 50m
+      memory: 64Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi

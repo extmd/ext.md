@@ -1,9 +1,0 @@
-## grafana configuration
-## Ref: https://github.com/kubernetes/charts/blob/master/stable/grafana/values.yaml
-persistence:
-  enabled: true
-  storageClassName: standard
-  size: ${extmd.grafanaVolumeSize}
-  accessModes:
-    - ReadWriteOnce
-adminPassword: ${extmd.grafanaAdminPassword}
