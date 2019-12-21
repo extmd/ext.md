@@ -12,7 +12,51 @@ siteStaticVersion: "${extmd.siteVersion}"
 siteVersion: "${extmd.siteVersion}"
 appVersion: "${extmd.appVersion}"
 etcInitVersion: "${extmd.etcInitVersion}"
-fiakVersion: "${fiak.version}"
+
+
+# Resource Usage
+backendBackupResources:
+  limits:
+    memory: 100Mi
+    cpu: 50m
+  requests:
+    memory: 100Mi
+    cpu: 50m
+backendTickResources:
+  limits:
+    memory: 10Mi
+    cpu: 10m
+  requests:
+    memory: 10Mi
+    cpu: 10m
+backendResources:
+  limits:
+    memory: 700Mi
+    cpu: 200m
+  requests:
+    memory: 700Mi
+    cpu: 200m
+frontendSiteResources:
+  limits:
+    memory: 100Mi
+    cpu: 100m
+  requests:
+    memory: 100Mi
+    cpu: 100m
+frontendSyncResources:
+  limits:
+    memory: 10Mi
+    cpu: 10m
+  requests:
+    memory: 10Mi
+    cpu: 10m
+frontendNginxResources:
+  limits:
+    memory: 100Mi
+    cpu: 50m
+  requests:
+    memory: 100Mi
+    cpu: 50m
 
 # App settings
 extraAppJobSuffix: "-${buildNumber}"
