@@ -250,16 +250,6 @@
             </configuration>
           </execution>
           <execution>
-            <id>helm-upgrade-fiak-site</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <commandlineArgs>upgrade -i -f sources/values-frontend.yaml -f sources/values-extmd.yaml fiak-site packages/fiak-site-1.0.tgz --wait</commandlineArgs>
-            </configuration>
-          </execution>
-          <execution>
             <id>helm-upgrade-nginx</id>
             <phase>compile</phase>
             <goals>

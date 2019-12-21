@@ -46,7 +46,6 @@
     <extendedmind.app.name>extended mind</extendedmind.app.name>
     <extendedmind.url>https://ext.md</extendedmind.url>
     <extendedmind.helm.properties>production</extendedmind.helm.properties>
-    <fiak.version>2.6.7</fiak.version>
   </properties>
 
   <profiles>
@@ -64,22 +63,16 @@
     </profile>
   </profiles>
 
-  <repositories>
-    <repository>
-      <id>extendedmind-releases</id>
-      <name>Extended Mind Releases</name>
-      <url>https://nexus.extendedmind.org/repository/releases</url>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>thirdparty.jboss.org</id>
+      <name>JBoss - Third Party Repository</name>
+      <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
+      <layout>default</layout>
       <releases><enabled>true</enabled></releases>
       <snapshots><enabled>false</enabled></snapshots>
-    </repository>
-    <repository>
-      <id>extendedmind-snapshots</id>
-      <name>Extended Mind Snapshots</name>
-      <url>https://nexus.extendedmind.org/repository/snapshots</url>
-      <releases><enabled>false</enabled></releases>
-      <snapshots><enabled>true</enabled></snapshots>
-    </repository>
-  </repositories>
+    </pluginRepository>
+  </pluginRepositories>
 
   <dependencyManagement>
     <dependencies>
@@ -222,32 +215,8 @@
       <uniqueVersion>false</uniqueVersion>
       <id>extendedmind-releases</id>
       <name>Extended Mind Releases</name>
-      <url>https://nexus.extendedmind.org/repository/releases/</url>
+      <url>file://${basedir}/target</url>
       <layout>default</layout>
     </repository>
-    <snapshotRepository>
-      <uniqueVersion>true</uniqueVersion>
-      <id>extendedmind-snapshots</id>
-      <name>Extended Mind Snapshots</name>
-      <url>https://nexus.extendedmind.org/repository/snapshots/</url>
-      <layout>default</layout>
-    </snapshotRepository>
   </distributionManagement>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>thirdparty.jboss.org</id>
-      <name>JBoss - Third Party Repository</name>
-      <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
-      <layout>default</layout>
-      <releases><enabled>true</enabled></releases>
-      <snapshots><enabled>false</enabled></snapshots>
-    </pluginRepository>
-    <pluginRepository>
-      <id>extendedmind-releases</id>
-      <name>Extended Mind Releases</name>
-      <url>https://nexus.extendedmind.org/repository/releases</url>
-      <releases><enabled>true</enabled></releases>
-      <snapshots><enabled>false</enabled></snapshots>
-    </pluginRepository>
-  </pluginRepositories>
 </project>
