@@ -107,8 +107,6 @@
     <module>app</module>
     <module>site</module>
     <module>helm</module>
-    <module>e2e</module>
-    <module>deploy</module>
   </modules>
 
   <build>

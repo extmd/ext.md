@@ -89,26 +89,6 @@
               </artifactItems>
             </configuration>
           </execution>
-          <execution>
-            <id>unpack-fiak-site-conf</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>fi.filosofianakatemia</groupId>
-                  <artifactId>site</artifactId>
-                  <version>${fiak.version}</version>
-                  <classifier>config</classifier>
-                  <type>zip</type>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/fiak-site-config</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
         </executions>
       </plugin>
       <plugin>
