@@ -34,7 +34,7 @@ backendResources:
     memory: 700Mi
     cpu: 200m
   requests:
-    memory: 700Mi
+    memory: 800Mi
     cpu: 200m
 frontendSiteResources:
   limits:
