@@ -13,7 +13,6 @@ siteVersion: "${extmd.siteVersion}"
 appVersion: "${extmd.appVersion}"
 etcInitVersion: "${extmd.etcInitVersion}"
 
-
 # Resource Usage
 backendBackupResources:
   limits:
@@ -31,11 +30,12 @@ backendTickResources:
     cpu: 10m
 backendResources:
   limits:
-    memory: 800Mi
-    cpu: 200m
+    memory: 500Mi
+    cpu: 500m
   requests:
-    memory: 800Mi
-    cpu: 200m
+    memory: 500Mi
+    cpu: 500m
+backendJavaToolOpts: -Xmx400m
 frontendSiteResources:
   limits:
     memory: 100Mi
@@ -64,11 +64,13 @@ extraAppJobSuffix: "-${buildNumber}"
 # Site settings
 siteHostName: "extmd-site"
 extraSiteStaticJobSuffix: "-${buildNumber}"
+frontendReplicas: 1
 
 # Nginx passwords
 analyticspass: "${extmd.analyticsPass}"
 dashboardpass: "${extmd.dashboardPass}"
 urlOrigin: "${extendedmind.urlOrigin}"
+nginxReplicas: 1
 
 # ACME settings
 acmeServer: "${extmd.acmeServer}"
