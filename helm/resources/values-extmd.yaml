@@ -31,7 +31,7 @@ backendTickResources:
     cpu: 10m
 backendResources:
   limits:
-    memory: 700Mi
+    memory: 800Mi
     cpu: 200m
   requests:
     memory: 800Mi
