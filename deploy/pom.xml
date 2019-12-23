@@ -4,10 +4,9 @@
   <parent>
     <groupId>md.ext</groupId>
     <artifactId>root</artifactId>
-    <version>1.9.18</version>
+    <version>1.9.18.1</version>
   </parent>
   <artifactId>deploy</artifactId>
-  <version>0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ext.md :: deploy</name>
   <description>ext.md deploy</description>
