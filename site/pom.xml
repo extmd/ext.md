@@ -35,6 +35,7 @@
 
   <properties>
     <nginxSiteHost>extmd-site</nginxSiteHost>
+    <extraNginxConf/>
   </properties>
 
   <build>
@@ -87,28 +88,6 @@
                   <outputDirectory>${project.build.directory}/extendedmind-frontend-site</outputDirectory>
                 </artifactItem>
               </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.gmaven</groupId>
-        <artifactId>gmaven-plugin</artifactId>
-        <version>1.4</version>
-        <executions>
-          <execution>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <properties>
-                <extraNginxConfFile>${project.basedir}/resources/extra.nginx.extendedmind.conf</extraNginxConfFile>
-              </properties>
-              <source>
-                def file = new File(project.properties.extraNginxConfFile)
-                project.properties.extraNginxConf = file.getText()
-              </source>
             </configuration>
           </execution>
         </executions>

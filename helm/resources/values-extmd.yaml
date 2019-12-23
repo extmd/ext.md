@@ -65,10 +65,6 @@ extraAppJobSuffix: "-${buildNumber}"
 siteHostName: "extmd-site"
 extraSiteStaticJobSuffix: "-${buildNumber}"
 
-# Fiak settings
-fiakFrontendReplicas: ${extmd.fiakFrontendReplicas}
-fiakNfsSyncSource: ${extmd.fiakNfsSyncSource}
-
 # Nginx passwords
 analyticspass: "${extmd.analyticsPass}"
 dashboardpass: "${extmd.dashboardPass}"
