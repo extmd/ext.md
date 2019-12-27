@@ -9,7 +9,7 @@ controller:
   resources:
     limits:
       cpu: 50m
-      memory: 90Mi
+      memory: 150Mi
     requests:
       cpu: 50m
       memory: 90Mi
