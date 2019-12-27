@@ -22,9 +22,6 @@
     <span class="icon-logo-text"></span></br>
     <span class="slogan">minimal task and note organizer</span>
    </div>
-   <div class="hero-cta text-center">
-     <a href="/signup" class="button">sign up</a>
-   </div>
 </section>
 {% endblock %}
 {% block footer %}{% endblock %}
