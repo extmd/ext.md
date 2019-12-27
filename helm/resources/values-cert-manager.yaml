@@ -1,0 +1,15 @@
+# Suggested values from https://github.com/jetstack/cert-manager/blob/master/deploy/charts/cert-manager/values.yaml
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+webhook:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+cainjector:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi

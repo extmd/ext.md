@@ -87,13 +87,14 @@
         <artifactId>exec-maven-plugin</artifactId>
         <executions>
           <execution>
-            <id>helm-repo-update</id>
+            <id>helm-init</id>
             <phase>compile</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
-              <commandlineArgs>repo update</commandlineArgs>
+              <executable>sh</executable>
+              <commandlineArgs>-c 'helm repo add jetstack https://charts.jetstack.io &amp;&amp; helm repo add stable https://kubernetes-charts.storage.googleapis.com &amp;&amp; helm repo update'</commandlineArgs>
             </configuration>
           </execution>
           <execution>
@@ -155,7 +156,17 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <commandlineArgs>delete extendedmind-backend --purge</commandlineArgs>
+              <commandlineArgs>delete extendedmind-backend</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-install-extendedmind-backend-upgrade</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install -f sources/values-upgrade.yaml -f sources/values-extmd.yaml extendedmind-backend packages/extendedmind-backend-1.0.tgz --wait</commandlineArgs>
             </configuration>
           </execution>
           <execution>
@@ -209,13 +220,23 @@
             </configuration>
           </execution>
           <execution>
-            <id>helm-upgrade-extendedmind-site</id>
+            <id>helm-upgrade-extendedmind-site-with-sync</id>
             <phase>compile</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
               <commandlineArgs>upgrade -i -f sources/values-frontend.yaml -f sources/values-extmd.yaml extendedmind-site packages/extendedmind-site-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-extendedmind-site-no-sync</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-frontend.yaml -f sources/values-extmd.yaml -f sources/values-site-no-sync.yaml extendedmind-site packages/extendedmind-site-1.0.tgz --wait</commandlineArgs>
             </configuration>
           </execution>
           <execution>
@@ -226,6 +247,26 @@
             </goals>
             <configuration>
               <commandlineArgs>upgrade -i -f sources/values-frontend.yaml -f sources/values-extmd.yaml nginx packages/nginx-1.0.tgz --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-cert-manager</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-cert-manager.yaml cert-manager jetstack/cert-manager --version=0.12.0 --set ingressShim.defaultIssuerName=letsencrypt --set ingressShim.defaultIssuerKind=ClusterIssuer --set ingressShim.defaultIssuerGroup=cert-manager.io --set createCustomResource=true --wait</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-upgrade-network</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>upgrade -i -f sources/values-extmd.yaml network packages/network-1.0.tgz --wait</commandlineArgs>
             </configuration>
           </execution>
           <execution>

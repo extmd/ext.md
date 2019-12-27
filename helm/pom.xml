@@ -34,16 +34,16 @@
 
   <properties>
     <!-- extendedmind containers -->
-    <extendedmind.backendVersion>1.9.18.4</extendedmind.backendVersion>
-    <extendedmind.backendDiscoveryVersion>1.9.18.4</extendedmind.backendDiscoveryVersion>
-    <extendedmind.backendRestoreVersion>1.9.18.4</extendedmind.backendRestoreVersion>
-    <extendedmind.backendBackupVersion>1.9.18.4</extendedmind.backendBackupVersion>
-    <extendedmind.syncFolderVersion>1.9.18.4</extendedmind.syncFolderVersion>
+    <extendedmind.backendVersion>1.9.18.5</extendedmind.backendVersion>
+    <extendedmind.backendDiscoveryVersion>1.9.18.5</extendedmind.backendDiscoveryVersion>
+    <extendedmind.backendRestoreVersion>1.9.18.5</extendedmind.backendRestoreVersion>
+    <extendedmind.backendBackupVersion>1.9.18.5</extendedmind.backendBackupVersion>
+    <extendedmind.syncFolderVersion>1.9.18.5</extendedmind.syncFolderVersion>
 
     <!-- ext.md containers -->
-    <extmd.siteVersion>1.9.18.4</extmd.siteVersion>
-    <extmd.appVersion>1.9.18.4</extmd.appVersion>
-    <extmd.etcInitVersion>1.9.18.4</extmd.etcInitVersion>
+    <extmd.siteVersion>1.9.18.5</extmd.siteVersion>
+    <extmd.appVersion>1.9.18.5</extmd.appVersion>
+    <extmd.etcInitVersion>1.9.18.5</extmd.etcInitVersion>
   </properties>
 
   <build>
@@ -229,6 +229,16 @@
             </goals>
             <configuration>
               <commandlineArgs>package ../helm/nginx</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>helm-package-network</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>package ../helm/network</commandlineArgs>
             </configuration>
           </execution>
           <execution>

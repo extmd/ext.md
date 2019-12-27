@@ -16,10 +16,10 @@ etcInitVersion: "${extmd.etcInitVersion}"
 # Resource Usage
 backendBackupResources:
   limits:
-    memory: 100Mi
+    memory: 400Mi
     cpu: 50m
   requests:
-    memory: 100Mi
+    memory: 200Mi
     cpu: 50m
 backendTickResources:
   limits:
@@ -31,10 +31,10 @@ backendTickResources:
 backendResources:
   limits:
     memory: 500Mi
-    cpu: 500m
+    cpu: 100m
   requests:
     memory: 500Mi
-    cpu: 500m
+    cpu: 100m
 backendJavaToolOpts: -Xmx400m
 frontendSiteResources:
   limits:
@@ -45,10 +45,10 @@ frontendSiteResources:
     cpu: 100m
 frontendSyncResources:
   limits:
-    memory: 100Mi
+    memory: 200Mi
     cpu: 50m
   requests:
-    memory: 100Mi
+    memory: 200Mi
     cpu: 50m
 frontendNginxResources:
   limits:
