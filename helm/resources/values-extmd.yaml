@@ -16,11 +16,12 @@ etcInitVersion: "${extmd.etcInitVersion}"
 # Resource Usage
 backendBackupResources:
   limits:
-    memory: 400Mi
+    memory: 200Mi
     cpu: 50m
   requests:
     memory: 200Mi
     cpu: 50m
+backendBackupHeapSize: 150m
 backendTickResources:
   limits:
     memory: 10Mi
