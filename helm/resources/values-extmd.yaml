@@ -31,12 +31,12 @@ backendTickResources:
     cpu: 10m
 backendResources:
   limits:
-    memory: 500Mi
+    memory: 400Mi
     cpu: 100m
   requests:
-    memory: 500Mi
+    memory: 400Mi
     cpu: 100m
-backendJavaToolOpts: -Xmx400m
+backendJavaToolOpts: -Xmx300m
 frontendSiteResources:
   limits:
     memory: 100Mi
