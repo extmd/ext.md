@@ -34,16 +34,16 @@
 
   <properties>
     <!-- extendedmind containers -->
-    <extendedmind.backendVersion>1.9.18.6</extendedmind.backendVersion>
-    <extendedmind.backendDiscoveryVersion>1.9.18.6</extendedmind.backendDiscoveryVersion>
-    <extendedmind.backendRestoreVersion>1.9.18.6</extendedmind.backendRestoreVersion>
-    <extendedmind.backendBackupVersion>1.9.18.6</extendedmind.backendBackupVersion>
-    <extendedmind.syncFolderVersion>1.9.18.6</extendedmind.syncFolderVersion>
+    <extendedmind.backendVersion>1.9.18.7</extendedmind.backendVersion>
+    <extendedmind.backendDiscoveryVersion>1.9.18.7</extendedmind.backendDiscoveryVersion>
+    <extendedmind.backendRestoreVersion>1.9.18.7</extendedmind.backendRestoreVersion>
+    <extendedmind.backendBackupVersion>1.9.18.7</extendedmind.backendBackupVersion>
+    <extendedmind.syncFolderVersion>1.9.18.7</extendedmind.syncFolderVersion>
 
     <!-- ext.md containers -->
-    <extmd.siteVersion>1.9.18.6</extmd.siteVersion>
-    <extmd.appVersion>1.9.18.6</extmd.appVersion>
-    <extmd.etcInitVersion>1.9.18.6</extmd.etcInitVersion>
+    <extmd.siteVersion>1.9.18.7</extmd.siteVersion>
+    <extmd.appVersion>1.9.18.7</extmd.appVersion>
+    <extmd.etcInitVersion>1.9.18.7</extmd.etcInitVersion>
   </properties>
 
   <build>
