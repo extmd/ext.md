@@ -22,7 +22,6 @@ backendBackupResources:
     memory: 200Mi
     cpu: 50m
 backendBackupHeapSize: 150m
-backendBackupTempDir: /tmp/backup
 backendTickResources:
   limits:
     memory: 10Mi
